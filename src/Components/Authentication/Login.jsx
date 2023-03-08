@@ -5,7 +5,7 @@ import {
   RecaptchaVerifier,
 } from "firebase/auth";
 
-import app from "../../FirebaseConfigs/FirebaseConfig";
+import app from "../FirebaseConfigs/FirebaseConfig";
 import { Rings } from "react-loader-spinner";
 
 const Login = () => {
