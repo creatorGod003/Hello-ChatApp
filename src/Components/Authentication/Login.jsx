@@ -65,15 +65,17 @@ const Login = () => {
   function resolveOTP() {
     
     const otp = userOTP;
+    setOnProgress(true);
     window.confirmationResult.confirm(otp).then((result) => {
       // User signed in successfully.
       const user = result.user;
       setActionStatus("User Signed in successfully");
-
+      setOnProgress(false)
       // ...
     }).catch((error) => {
       console.log("Invalid Verification Code");
       setActionStatus("Invalid Verification Code");
+      setOnProgress(false)
     });
 
 
@@ -149,7 +151,7 @@ const Login = () => {
       )}
       <div
         id="recaptcha-container"
-        className={onProgress ? "" : "hidden"}
+        className={!verified ? "" : "hidden"}
       ></div>
       {verified && (
         <div className="flex flex-col p-4 h-40 justify-around items-center">
@@ -175,6 +177,7 @@ const Login = () => {
             className="p-2 border w-1/2 bg-purple-600 rounded-2xl hover:bg-purple-700 text-white flex justify-around items-center disabled:opacity-50 disabled:cursor-not-allowed"
             id="signinbtn"
             onClick={resolveOTP}
+            disabled={onProgress}
           >
             <span>Verify OTP</span>
             {onProgress ? (
