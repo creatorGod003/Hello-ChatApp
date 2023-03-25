@@ -4,9 +4,13 @@ import {
   signInWithPhoneNumber,
   RecaptchaVerifier,
 } from "firebase/auth";
+import { useAuth } from "../Context/Auth";
+
+
 
 import app from "../FirebaseConfigs/FirebaseConfig";
 import { Rings } from "react-loader-spinner";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [countrycode, setCountrycode] = useState("+91");
@@ -17,6 +21,9 @@ const Login = () => {
   const [userOTP, setUserOTP] = useState("");
   const [verified, setVerified] = useState("");
   const [actionStatus, setActionStatus] = useState("");
+  const navigate = useNavigate();
+
+  const globalAuth = useAuth();
 
   useEffect(() => {
     setPhoneNumber(countrycode + number);
@@ -69,6 +76,7 @@ const Login = () => {
     window.confirmationResult.confirm(otp).then((result) => {
       // User signed in successfully.
       const user = result.user;
+      globalAuth.login(user);
       setActionStatus("User Signed in successfully");
       setOnProgress(false)
       // ...
@@ -78,6 +86,8 @@ const Login = () => {
       setOnProgress(false)
     });
 
+    console.log(globalAuth.user);
+    navigate("/home");
 
   }
 
@@ -95,11 +105,11 @@ const Login = () => {
         >
           <label htmlFor="" className="flex items-center">
             <span className="font-bold text-lg">Enter Number:</span>
-            <div className="border-b-4 border-purple-600 focus:outline-none active:outline-none">
+            <div className="border-b-4 border-blue-600 focus:outline-none active:outline-none">
               <select
                 name=""
                 id=""
-                className="px-1 text-purple-600"
+                className="px-1 text-blue-600"
                 defaultValue={"+91"}
                 onChange={(e) => {
                   setCountrycode(e.target.value);
@@ -126,7 +136,7 @@ const Login = () => {
           </label>
 
           <button
-            className="p-2 border w-1/2 bg-purple-600 rounded-2xl hover:bg-purple-700 text-white flex justify-around items-center disabled:opacity-50 disabled:cursor-not-allowed"
+            className="p-2 border w-1/2 bg-blue-600 rounded-2xl hover:bg-blue-700 text-white flex justify-around items-center disabled:opacity-50 disabled:cursor-not-allowed"
             id="signinbtn"
             onClick={setUpRecaptcha}
             disabled={onProgress}
@@ -157,7 +167,7 @@ const Login = () => {
         <div className="flex flex-col p-4 h-40 justify-around items-center">
           <label htmlFor="" className="flex items-center">
             <span className="font-bold text-lg">Enter OTP:</span>
-            <div className="border-b-4 border-purple-600 focus:outline-none active:outline-none">
+            <div className="border-b-4 border-blue-600 focus:outline-none active:outline-none">
               <input
                 type="number"
                 name=""
@@ -174,7 +184,7 @@ const Login = () => {
           </label>
 
           <button
-            className="p-2 border w-1/2 bg-purple-600 rounded-2xl hover:bg-purple-700 text-white flex justify-around items-center disabled:opacity-50 disabled:cursor-not-allowed"
+            className="p-2 border w-1/2 bg-blue-600 rounded-2xl hover:bg-blue-700 text-white flex justify-around items-center disabled:opacity-50 disabled:cursor-not-allowed"
             id="signinbtn"
             onClick={resolveOTP}
             disabled={onProgress}

@@ -4,7 +4,13 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'pattern1': "url('/public/Images/pattern1.svg')",
+        'attachment': "url('/public/Images/attachment.svg') ",
+
+      },
+    },
   },
   plugins: [
     require('tailwindcss'),
