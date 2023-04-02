@@ -7,7 +7,14 @@ import Signup from "./Components/Authentication/Signup";
 import Content from "./Components/Home/Content";
 import About from "./Components/Home/About";
 import RequireAuth from "./Components/Authentication/RequireAuth";
+import ChatPanel from "./Components/Chat/UserChat/ChatPanel";
+
+import { useSelector } from 'react-redux'
+
 function App() {
+
+  const user = useSelector((state)=> {return state.user.user})
+
   return (
     <>      
       <Routes>
@@ -21,7 +28,8 @@ function App() {
           // <RequireAuth>
             <ChatPage/>
           // </RequireAuth>
-        } />
+        }/>
+        <Route path="chatpanel" element={<ChatPanel user={user} />}/>
       </Routes>
     </>
   );
