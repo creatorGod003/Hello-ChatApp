@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState={
     selected:false,
-    emoji:''
+    update_textEditor:[],
 }
 
 const emojiSlice = createSlice({
@@ -12,11 +12,11 @@ const emojiSlice = createSlice({
         configureEmojiPanel:(state, action)=>{
             state.selected = action.payload
         },
-        updateEmoji:(state, action)=>{
-            state.emoji = action.payload
+        updateTextEditor: (state, action)=>{
+            state.update_textEditor = action.payload
         }
     }
 })
 
 export default emojiSlice.reducer
-export const {configureEmojiPanel, updateEmoji} = emojiSlice.actions
+export const {configureEmojiPanel, updateTextEditor} = emojiSlice.actions

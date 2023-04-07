@@ -7,7 +7,7 @@ import {useNavigate} from 'react-router-dom'
 const UserContact = (props) => {
   
   const dispatch = useDispatch()
-  const [selected, setSelected] = useState(false)
+  const selected = false;
   const navigate = useNavigate()
 
   const toggleSelect = ()=>{

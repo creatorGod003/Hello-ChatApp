@@ -1,22 +1,28 @@
-import React, { useState } from "react";
-import EmojiPicker from "emoji-picker-react";
-import { useDispatch, useSelector } from "react-redux";
-import { configureEmojiPanel} from "../../../features/emoji/emojiSlice";
+import React, { useEffect, useState } from "react";
+import { useDispatch} from "react-redux";
+import { configureEmojiPanel, updateTextEditor} from "../../../features/emoji/emojiSlice";
 
-
-// message editor component which is responsible for showing emoji picker, attachment button and message input field
 const MessageEditor = () => {
 
-  const [emojiSelected, setEmojiSelected] = useState(false)
-  const emoji = useSelector((state) => {console.log(state);return state.emojipicker.emoji});
+
+  const [emojiSelected, setEmojiSelected] = useState(false);
   const [text, setText] = useState("");
   const dispatch = useDispatch();
 
-  function toggleEmojiPicker(){
+  useEffect(() => {
+    dispatch(updateTextEditor([text, setText]))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text])
 
+  function toggleEmojiPicker(){
     setEmojiSelected(!emojiSelected)
     dispatch(configureEmojiPanel(!emojiSelected))
   }
+  function inputOnChangeHandler(e){
+    setText(e.target.value)
+  }
+
+  console.log("Rendered from bottom")
 
   return (
     <div className="bg-blue-400 p-4 grid grid-rows-1 grid-cols-[45px,45px,1fr,45px,45px]  md:grid-cols-[60px,60px,1fr,60px,60px]  place-items-center ">
@@ -45,11 +51,11 @@ const MessageEditor = () => {
         <input
           type="text"
           name=""
-          id=""
+          id="text-editor"
           className="inline-block w-full h-full p-2 placeholder:text-gray-600 rounded-md focus:outline-none  break-words"
           placeholder="Enter messages"
-          value={""}
-          onChange={(e) => setText(e.target.value)}
+          value={text}
+          onChange={inputOnChangeHandler}
         />
       </div>
       {/* Send button */}
@@ -76,4 +82,4 @@ const MessageEditor = () => {
   );
 };
 
-export default MessageEditor;
+export default MessageEditor

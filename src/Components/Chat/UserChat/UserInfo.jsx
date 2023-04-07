@@ -7,8 +7,8 @@ const UserInfo = (props) => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-blue-400 flex items-center">
-      <div className="flex items-center">
+    <div className="bg-blue-400 flex items-center ">
+      
         <button onClick={()=>{navigate(-1)}}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -25,15 +25,17 @@ const UserInfo = (props) => {
             />
           </svg>
         </button>
-        <img
-          src={props.user.userImg}
-          alt=""
-          className="w-12 h-12 rounded-full"
-        />
-        <div className="ml-2">{props.user.username}</div>
-      </div>
-    </div>
-  );
-};
-
+        <div className="flex items-center mx-4">
+          <div className="flex items-center">
+            <img
+              src={props.user.userImg}
+              alt=""
+              className="w-12 h-12 rounded-full"
+            />
+          </div>
+          <div className="ml-2">{props.user.username}</div>
+        </div>
+  </div>
+);
+}
 export default UserInfo;
