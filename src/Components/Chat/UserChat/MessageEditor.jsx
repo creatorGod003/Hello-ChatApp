@@ -29,6 +29,7 @@ const MessageEditor = () => {
     panelRef.current.classList.remove('grid-cols-[45px,45px,1fr,45px,45px]')
     micRef.current.classList.add('hidden')
     panelRef.current.classList.add('grid-cols-[45px,45px,1fr,45px]')
+    toggleEmojiPicker()
     
   }
   function handleBlur(){
@@ -87,7 +88,7 @@ const MessageEditor = () => {
         </button>
       </div>
       {/* Voice message button */}
-      <div className="rounded-full bg-white p-2" ref={micRef}>
+      <div className="rounded-full bg-white p-2 md:block" ref={micRef}>
         <button className="inline-block">
           <img
             src="Images/microphone.gif"
