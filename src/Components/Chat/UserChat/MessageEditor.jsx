@@ -29,7 +29,11 @@ const MessageEditor = () => {
     panelRef.current.classList.remove('grid-cols-[45px,45px,1fr,45px,45px]')
     micRef.current.classList.add('hidden')
     panelRef.current.classList.add('grid-cols-[45px,45px,1fr,45px]')
-    toggleEmojiPicker()
+    
+    if(emojiSelected === true){
+      setEmojiSelected(false)
+      dispatch(configureEmojiPanel(false))
+    }
     
   }
   function handleBlur(){
