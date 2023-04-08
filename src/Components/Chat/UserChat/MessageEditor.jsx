@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch} from "react-redux";
 import { configureEmojiPanel, updateTextEditor} from "../../../features/emoji/emojiSlice";
 
@@ -8,6 +8,9 @@ const MessageEditor = () => {
   const [emojiSelected, setEmojiSelected] = useState(false);
   const [text, setText] = useState("");
   const dispatch = useDispatch();
+  const micRef = useRef();
+  const panelRef = useRef();
+
 
   useEffect(() => {
     dispatch(updateTextEditor([text, setText]))
@@ -22,10 +25,22 @@ const MessageEditor = () => {
     setText(e.target.value)
   }
 
+  function handleFocus(){
+    panelRef.current.classList.remove('grid-cols-[45px,45px,1fr,45px,45px]')
+    micRef.current.classList.add('hidden')
+    panelRef.current.classList.add('grid-cols-[45px,45px,1fr,45px]')
+    
+  }
+  function handleBlur(){
+    panelRef.current.classList.remove('grid-cols-[45px,45px,1fr,45px]')
+    micRef.current.classList.remove('hidden')
+    panelRef.current.classList.add('grid-cols-[45px,45px,1fr,45px,45px]')
+  }
+
   console.log("Rendered from bottom")
 
   return (
-    <div className="bg-blue-400 p-4 grid grid-rows-1 grid-cols-[45px,45px,1fr,45px,45px]  md:grid-cols-[60px,60px,1fr,60px,60px]  place-items-center ">
+    <div className="bg-blue-400 p-4 grid grid-rows-1 grid-cols-[45px,45px,1fr,45px,45px]  md:grid-cols-[60px,60px,1fr,60px,60px]  place-items-center " ref={panelRef}>
       {/* Emoji picker */}
       <div className="bg-white rounded-full p-2" onClick={toggleEmojiPicker}>
         <button>
@@ -56,6 +71,9 @@ const MessageEditor = () => {
           placeholder="Enter messages"
           value={text}
           onChange={inputOnChangeHandler}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          
         />
       </div>
       {/* Send button */}
@@ -69,7 +87,7 @@ const MessageEditor = () => {
         </button>
       </div>
       {/* Voice message button */}
-      <div className="rounded-full bg-white p-2">
+      <div className="rounded-full bg-white p-2" ref={micRef}>
         <button className="inline-block">
           <img
             src="Images/microphone.gif"
