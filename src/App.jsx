@@ -7,12 +7,21 @@ import Signup from "./Components/Authentication/Signup";
 import Content from "./Components/Home/Content";
 import About from "./Components/Home/About";
 import RequireAuth from "./Components/Authentication/RequireAuth";
+import ChatPanel from "./Components/Chat/UserChat/ChatPanel";
+
+import { useSelector } from 'react-redux'
+
+import Page404 from "./Components/Page404/Page404.jsx";
+
 function App() {
+
+  const user = useSelector((state)=> {return state.user.user})
+
   return (
     <>      
       <Routes>
         <Route path="/" element={<Home/>} >
-          <Route index path="home" element={<Content/>} />
+          <Route path="home" element={<Content/>} />
           <Route path="login" element={<Login/>} />
           <Route path="signup" element={<Signup/>} />
           <Route path="about" element={<About/>}/>
@@ -21,7 +30,9 @@ function App() {
           // <RequireAuth>
             <ChatPage/>
           // </RequireAuth>
-        } />
+        }/>
+        <Route path="chatpanel" element={<ChatPanel user={user} />}/>
+        <Route path="*" element={<Page404/>} />
       </Routes>
     </>
   );

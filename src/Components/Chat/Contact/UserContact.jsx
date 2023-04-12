@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {updateuser} from '../../../features/user/userSlice'
-
+import {useNavigate} from 'react-router-dom'
 
 // User contact component which is responsible for showing user contact showing its image, username along with last message and time
 const UserContact = (props) => {
   
   const dispatch = useDispatch()
-  const [selected, setSelected] = useState(false)
+  const selected = false;
+  const navigate = useNavigate()
+
   const toggleSelect = ()=>{
 
     dispatch(selected?updateuser(null):updateuser(props.userData))
+    navigate('/chatpanel')
 
   }
 

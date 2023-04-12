@@ -47,13 +47,133 @@ const ContactList = () => {
   ),
 }
 
+,
+{
+  username:  'Rahul Kumar',
+  userImg : 'Images/avatar1.jpeg',
+  message : new Map(
+    [ 
+      ["25-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
+      ["26-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["28-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
+      ["29-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["30-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
+      ["31-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+    ]
+  ),
+}
+,
+{
+  username:  'Rahul Kumar',
+  userImg : 'Images/avatar1.jpeg',
+  message : new Map(
+    [ 
+      ["25-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
+      ["26-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["28-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
+      ["29-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["30-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
+      ["31-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+    ]
+  ),
+}
+,
+{
+  username:  'Rahul Kumar',
+  userImg : 'Images/avatar1.jpeg',
+  message : new Map(
+    [ 
+      ["25-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
+      ["26-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["28-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
+      ["29-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["30-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
+      ["31-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+    ]
+  ),
+}
+,
+{
+  username:  'Rahul Kumar',
+  userImg : 'Images/avatar1.jpeg',
+  message : new Map(
+    [ 
+      ["25-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
+      ["26-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["28-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
+      ["29-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["30-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
+      ["31-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+    ]
+  ),
+}
+,
+{
+  username:  'Rahul Kumar',
+  userImg : 'Images/avatar1.jpeg',
+  message : new Map(
+    [ 
+      ["25-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
+      ["26-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["28-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
+      ["29-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["30-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
+      ["31-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+    ]
+  ),
+}
+,
+{
+  username:  'Rahul Kumar',
+  userImg : 'Images/avatar1.jpeg',
+  message : new Map(
+    [ 
+      ["25-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
+      ["26-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["28-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
+      ["29-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["30-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
+      ["31-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+    ]
+  ),
+}
+,
+{
+  username:  'Rahul Kumar',
+  userImg : 'Images/avatar1.jpeg',
+  message : new Map(
+    [ 
+      ["25-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
+      ["26-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["28-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
+      ["29-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["30-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
+      ["31-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+    ]
+  ),
+}
+
 ]) 
 
   const [ anyContactSelected, setAnyContactSelected ] = useState(true)
 
   return (
 
-    <div className='p-4 my-4 flex flex-col h-[75vh] justify-start overflow-y-auto cursor-pointer select-none'>
+    <div className='p-2 my-3 flex flex-col h-[75vh] justify-start overflow-y-auto cursor-pointer'>
         {
           userData.map((user, index) => {
             return <UserContact key={index} userData={user} contactSelect = {anyContactSelected} setContactSelect={setAnyContactSelected} />
