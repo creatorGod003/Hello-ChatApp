@@ -10,162 +10,41 @@ const ContactList = () => {
   const [userData, setUserData] = useState([
 
 {
-
+  userId: "ashutoshranjan003",
   username:  'Ashutosh Ranjan',
   userImg : 'Images/avatar1.jpeg',
   message : new Map(
     [ 
-      ["25-03-2023", ["Me accha hun tum batao", "bohot yaad aa rhi hai yaar school time ki"]], 
-      ["26-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]]
+      ['Mon, 10 Apr 2023 15:16:40 GMT',"Hi bro how are you?"],
+      ['Mon, 10 Apr 2023 16:16:40 GMT', "I am fine, what about you?"],
+      ['Mon, 10 Apr 2023 17:16:40 GMT', "I am also fine, what are you doing?"],
     ]
   ),
 },
 {
+  userId: "manishsaw238",
   username:  'Manish Saw',
   userImg : 'Images/avatar1.jpeg',
   message : new Map(
     [ 
-      ["25-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["26-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]]
+      ['Mon, 11 Apr 2023 15:16:40 GMT',"Hi bro how are you?"],
+      ['Mon, 11 Apr 2023 16:16:40 GMT', "I am fine, what about you?"],
+      ['Mon, 11 Apr 2023 17:16:40 GMT', "I am also fine, what are you doing?"],
     ]
   ),
 },
 {
+  userId: "rahulkumar293",
   username:  'Rahul Kumar',
   userImg : 'Images/avatar1.jpeg',
   message : new Map(
     [ 
-      ["25-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["26-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["28-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["29-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["30-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["31-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
+      ['Mon, 10 Apr 2023 15:16:40 GMT',"Hi bro how are you?"],
+      ['Mon, 11 Apr 2023 16:18:40 GMT', "I am fine, what about you?"],
+      ['Mon, 12 Apr 2023 17:19:40 GMT', "I am also fine, what are you doing?"],
     ]
   ),
-}
-
-,
-{
-  username:  'Rahul Kumar',
-  userImg : 'Images/avatar1.jpeg',
-  message : new Map(
-    [ 
-      ["25-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["26-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["28-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["29-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["30-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["31-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-    ]
-  ),
-}
-,
-{
-  username:  'Rahul Kumar',
-  userImg : 'Images/avatar1.jpeg',
-  message : new Map(
-    [ 
-      ["25-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["26-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["28-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["29-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["30-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["31-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-    ]
-  ),
-}
-,
-{
-  username:  'Rahul Kumar',
-  userImg : 'Images/avatar1.jpeg',
-  message : new Map(
-    [ 
-      ["25-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["26-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["28-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["29-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["30-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["31-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-    ]
-  ),
-}
-,
-{
-  username:  'Rahul Kumar',
-  userImg : 'Images/avatar1.jpeg',
-  message : new Map(
-    [ 
-      ["25-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["26-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["28-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["29-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["30-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["31-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-    ]
-  ),
-}
-,
-{
-  username:  'Rahul Kumar',
-  userImg : 'Images/avatar1.jpeg',
-  message : new Map(
-    [ 
-      ["25-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["26-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["28-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["29-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["30-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["31-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-    ]
-  ),
-}
-,
-{
-  username:  'Rahul Kumar',
-  userImg : 'Images/avatar1.jpeg',
-  message : new Map(
-    [ 
-      ["25-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["26-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["28-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["29-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["30-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["31-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-    ]
-  ),
-}
-,
-{
-  username:  'Rahul Kumar',
-  userImg : 'Images/avatar1.jpeg',
-  message : new Map(
-    [ 
-      ["25-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["26-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["28-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["29-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["30-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]], 
-      ["31-03-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-      ["01-04-2023", ["Hello", "How are you?", "Hope you are doing well" ]],
-    ]
-  ),
-}
+},
 
 ]) 
 
