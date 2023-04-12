@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {updateuser} from '../../../features/user/userSlice'
 import {useNavigate} from 'react-router-dom'
 
@@ -9,11 +9,13 @@ const UserContact = (props) => {
   const dispatch = useDispatch()
   const selected = false;
   const navigate = useNavigate()
+  const isMobile = useSelector((state)=>{return state.responsive.isMobile}) 
 
   const toggleSelect = ()=>{
 
     dispatch(selected?updateuser(null):updateuser(props.userData))
-    navigate('/chatpanel')
+    if(isMobile)
+      navigate('/chatpanel')
 
   }
 

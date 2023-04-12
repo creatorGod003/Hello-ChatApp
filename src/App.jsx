@@ -8,14 +8,17 @@ import Content from "./Components/Home/Content";
 import About from "./Components/Home/About";
 import RequireAuth from "./Components/Authentication/RequireAuth";
 import ChatPanel from "./Components/Chat/UserChat/ChatPanel";
-
-import { useSelector } from 'react-redux'
-
+import { useDispatch, useSelector } from 'react-redux'
 import Page404 from "./Components/Page404/Page404.jsx";
+import { updateMobile } from "./features/Responsiveness/responsiveSlice";
 
 function App() {
 
   const user = useSelector((state)=> {return state.user.user})
+
+  const dispatch = useDispatch();
+  dispatch(updateMobile())
+  const isMobile = useSelector((state)=>{return state.responsive.isMobile})
 
   return (
     <>      
@@ -31,7 +34,11 @@ function App() {
             <ChatPage/>
           // </RequireAuth>
         }/>
-        <Route path="chatpanel" element={<ChatPanel user={user} />}/>
+
+        {
+          isMobile?<Route path="chatpanel" element={<ChatPanel user={user} />}/>:""
+        }
+              
         <Route path="*" element={<Page404/>} />
       </Routes>
     </>

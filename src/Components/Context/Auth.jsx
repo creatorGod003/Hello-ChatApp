@@ -9,7 +9,18 @@ const useAuth = ()=>{
 }
 
 const AuthState = (props)=>{
-    const[userConfig, setUserConfig] = useState(null);
+    const[userConfig, setUserConfig] = useState({
+        userId:'ashutoshranjan003',
+        username:  'Ashutosh Ranjan',
+        userImg : 'Images/avatar1.jpeg',
+        message : new Map(
+            [ 
+            ['Mon, 10 Apr 2023 15:16:40 GMT',"Hi bro how are you?"],
+            ['Mon, 10 Apr 2023 16:16:40 GMT', "I am fine, what about you?"],
+            ['Mon, 10 Apr 2023 17:16:40 GMT', "I am also fine, what are you doing?"],
+            ]
+  ),
+    });
     function login(user){
         setUserConfig(user);
     }
