@@ -14,12 +14,12 @@ const ContactHeader = () => {
     }
 
   return (
-    <div className="p-4 border-b-4 border-white text-center md:text-left">
+    <div className="p-4 border-b-4 border-white">
         <header className="flex justify-between text-2xl text-white p-2 mb-4">
           <span className='font-bold font-serif'>Hello</span>
           <button className='text-lg bg-blue-600 p-1 rounded-md'>logout</button>
         </header>
-        <label htmlFor="" className="relative">
+        <label htmlFor="" className="  relative">
           <input
             className="w-[80%] h-12 p-2 rounded-md placeholder:text-gray-600 bg-gray focus:outline-none border-b-4 border-b-blue-600"
             type="search"

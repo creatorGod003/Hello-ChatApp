@@ -8,7 +8,7 @@ import ContactList from "./ContactList";
 const Contact = () => {
 
   return (
-    <div className="row-span-full col-span-2 h-screen bg-gray-700 p-4 border-r-2 border-gray-300">
+    <div className="row-span-full col-span-2 h-screen bg-gray-700 p-4 border-r-2 border-gray-300  select-none">
       <ContactHeader/>
       <ContactList/>
     </div>
