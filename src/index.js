@@ -11,13 +11,13 @@ import store from "./app/store";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
-    <React.StrictMode>
+    {/* <React.StrictMode> */}
       <AuthState>
         <Provider store = {store}>
          <App />
         </Provider>
       </AuthState>
-    </React.StrictMode>
+    {/* </React.StrictMode> */}
   </BrowserRouter>
 );
 

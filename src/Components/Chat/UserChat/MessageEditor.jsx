@@ -72,7 +72,7 @@ const MessageEditor = () => {
           type="text"
           name=""
           id="text-editor"
-          className="inline-block w-full h-full p-2 placeholder:text-gray-600 rounded-md focus:outline-none  break-words"
+          className="inline-block w-full h-full p-2 text-lg placeholder:text-gray-600 rounded-md focus:outline-none  break-words"
           placeholder="Enter messages"
           value={text}
           onChange={inputOnChangeHandler}

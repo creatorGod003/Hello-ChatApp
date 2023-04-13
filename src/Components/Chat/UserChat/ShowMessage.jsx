@@ -1,25 +1,116 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 
 // Responsible for showing messages
 
 const ShowMessage = (props) => {
 
-    const messageDate = props.message[0];
-    const messageValue = props.message[1];
+  // const receiverMessage = [
+  //   ['Mon, 10 Apr 2023 15:16:40 GMT',"Hi bro receiver","mid:1138"],
+  //   ['Mon, 11 Apr 2023 16:18:40 GMT', "I am fine, from receiver side","mid:1139"],
+  // ]
+  
+  // const senderMessage = [
+  //   ['Mon, 10 Apr 2023 15:18:42 GMT',"Hi bro sender","mid:1140"],
+  //   ['Mon, 11 Apr 2023 16:19:40 GMT', "I am fine, from sender side?", "mid:1142"],
+  // ]
+
+  const receiverMessage = props.receiverMessage
+  const senderMessage = props.senderMessage
+  
+  function getMessageDiv(message, isLeft, mid){
+    return (
+      <div key={mid} className={`${isLeft?'mr-auto':'ml-auto'} ${isLeft?'text-left':'text-right'} text-black w-[40%]`}>
+        <div className={`inline-block ${isLeft?'bg-red-300':'bg-blue-300'} p-1 rounded ${isLeft?'ml-2':'mr-2'} `}>{message}</div>
+      </div>
+    )
+  }
+
+  function getDateDiv(date){
+    return (
+      <div className="text-center my-2 font-bold">
+        <div className="inline-block bg-slate-300 p-1 rounded">{date}</div>
+      </div>
+    )
+  }
+
+  const message = useRef([])
+  const [panelState, setPanelState] = useState([])
+  const [disableRenderMessage, setDisableRenderMessage] = useState(false)
+  
+  useEffect(() => {
+    if(!disableRenderMessage)
+      renderMessage()
+},[])
+
+  function renderMessage(){
+
+    var i=0,j=0;
+    setDisableRenderMessage(true)
+
+    var tempDate = '';
+    var senderDateObj = new Date()
+    var receiverDateObj = new Date()
+
+    for(; i<senderMessage.length && j<receiverMessage.length;){
+      console.log(i,j)
+      senderDateObj = new Date(senderMessage[i][0])
+      receiverDateObj = new Date(receiverMessage[j][0])
+  
+      console.log(senderDateObj, receiverDateObj)
+  
+      if(senderDateObj < receiverDateObj){
+        if(tempDate !== senderDateObj.toDateString()){
+          message.current.push(getDateDiv(senderDateObj.toDateString()))
+          tempDate = senderDateObj.toDateString()
+        }
+        message.current.push(getMessageDiv(senderMessage[i][1], false, senderMessage[i][2]))
+        console.log('chosen', senderDateObj , senderMessage[i][1])
+        i++;
+      }
+      else{
+
+        if(tempDate !== receiverDateObj.toDateString()){
+          message.current.push(getDateDiv(receiverDateObj.toDateString()))
+          tempDate = receiverDateObj.toDateString()
+        }
+          
+
+        message.current.push(getMessageDiv(receiverMessage[j][1], true, receiverMessage[j][2]))  
+        console.log('chosen', receiverDateObj, receiverMessage[j][1])  
+        j++;  
+      }
+      
+    }
+
+    while(i<senderMessage.length){
+      if(tempDate !== senderDateObj.toDateString()){
+        message.current.push(getDateDiv(senderDateObj.toDateString()))
+        tempDate = senderDateObj.toDateString()
+      }
+      message.current.push(getMessageDiv(senderMessage[i][1], false, senderMessage[i][2]))
+      i++;
+    }
+
+    while(j<receiverMessage.length){
+      if(tempDate !== receiverDateObj.toDateString()){
+        message.current.push(getDateDiv(receiverDateObj.toDateString()))
+        tempDate = receiverDateObj.toDateString()
+      }
+      message.current.push(getMessageDiv(receiverMessage[j][1], true, receiverMessage[j][2]))
+      j++;
+    }
+    
+    setPanelState([...panelState, ...message.current])
+  }
+
 
   return (
-    <div>
-        <div className='text-center'>
-            <div className='text-center bg-gray-400 rounded p-1 inline-block my-4'>{messageDate}</div>
-        </div>
-        <div className='flex flex-col'>
-            {messageValue.map((message, index) => 
-                    <div key={index} className="w-fit p-2 bg-blue-300 border-black border-2 m-1 rounded-lg rounded-tl-none">{message}</div>
-            )}
-        </div>
+    <div className='my-4' >
+      {panelState}
     </div>
   )
-}
-
+    
+  }
 export default ShowMessage
+

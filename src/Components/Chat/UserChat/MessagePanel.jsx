@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Picker from "emoji-picker-react";
 import { configureEmojiPanel } from "../../../features/emoji/emojiSlice";
 import { useEffect } from "react";
+import { useAuth } from "../../Context/Auth";
 
 const MessagePanel = (props) => {
   
@@ -25,19 +26,14 @@ const MessagePanel = (props) => {
     setText(text+event.emoji)
   };
 
-  const mapper = [];
-  const message = props.user.message;
-  for (const [key, value] of message) {
-    mapper.push([key, value]);
-  }
+  const senderMessage = useAuth().user.message
+
+  const receiverMessage = props.user.message
 
   return (
     <div className="overflow-y-auto bg-pattern1">
       <div className="">
-        {mapper &&
-          mapper.map((message, index) => {
-            return <ShowMessage key={index} message={message} />;
-          })}
+          <ShowMessage receiverMessage={receiverMessage} senderMessage={senderMessage}/>
       </div>
       {emojiSelected && (
         <div className="inline-block sticky bottom-0">
