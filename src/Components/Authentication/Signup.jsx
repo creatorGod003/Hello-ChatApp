@@ -1,76 +1,247 @@
-import { useFormik } from "formik";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { db } from "../FirebaseConfigs/FirebaseConfig";
+import { QuerySnapshot, addDoc, collection, doc, getDoc, getDocs, query, setDoc, where } from "firebase/firestore";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
-  const formik = useFormik({
-    initialValues: {
-      username: "",
-      email: "",
-      password: "",
-      mobile_number: "",
-      retype_password: "",
-    },
-    onSubmit: (values) => {
-      console.log(values);
-    },
-  });
 
-  console.log(formik.values);
+  // states
+  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [retype_password, setRetypePassword] = useState("");
+  const [country_code, setCountryCode] = useState("");
+  const [mobile_number, setMobileNumber] = useState("");
+  const [phone, setPhone] = useState("");
+  const error = "This is require field";
+
+  // requireState for error handling
+  const [requireUserName, setRequireUsername] = useState(false);
+  const [requireEmail, setRequireEmail] = useState(false);
+  const [requirePassword, setRequirePassword] = useState(false);
+  const [require_retype_password, setRequireRetypePassword] = useState(false);
+  const [require_country_code, setRequireCountryCode] = useState(false);
+  const [require_mobile_number, setRequireMobileNumber] = useState(false);
+  const [require_password_match, setRequirePasswordMatch] = useState(false);
+
+
+  function setRequireOff() {
+    setRequireUsername(false);
+    setRequireEmail(false);
+    setRequirePassword(false);
+    setRequireRetypePassword(false);
+    setRequireCountryCode(false);
+    setRequireMobileNumber(false);
+    setRequirePasswordMatch(false);
+  }
+
+  function resetFields(){
+    setUserName("");
+    setEmail("");
+    setPassword("");
+    setRetypePassword("");
+    setCountryCode("");
+    setMobileNumber("");
+    setPhone("");
+  }
+
+  function handleSignUp(e) {
+
+    e.preventDefault();
+
+    if (username === "") {
+      // setRequireUsername(true);
+      setRequireUsername(true);
+    }
+    if (email === "") {
+      // setRequireEmail(true);
+      setRequireEmail(true);
+    }
+    if (password === "") {
+      // setRequirePassword(true);
+      setRequirePassword(true);
+    }
+    if (retype_password === "") {
+
+      // setRequireRetypePassword(true);
+      setRequireRetypePassword(true);
+    }
+    if (country_code === "") {
+
+      // setRequireCountryCode(true);
+      setRequireCountryCode(true);
+    }
+    if (mobile_number === "") {
+
+      // setRequireMobileNumber(true);
+      setRequireMobileNumber(true);
+    }
+
+    if (password !== retype_password) {
+      // setRequirePasswordMatch(true);
+      setRequirePasswordMatch(true);
+    }
+
+    if(!email || !username || !password || !retype_password || !country_code || !mobile_number || password!==retype_password){
+      return;
+    }
+
+    setPhone(country_code + mobile_number);
+
+    console.log("update firestore content") 
+    updateDetails();
+    
+    // toast notification
+    toast.success("Account Created Successfully", {
+      position: "bottom-left",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+      
+      resetFields();
+
+  }
+
+  // create an object with username, email, password and phone number
+  function getObj(username, email, password, phone) {
+    return {
+      username,
+      email,
+      password,
+      phone,
+    };
+  }
+
+  // create a user in firestore database with username as document id and other details as fields
+  async function updateDetails() {
+    try {
+      const obj = getObj(username, email, password, phone);
+      await setDoc(doc(db, "users", username), obj);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    if(country_code!=="" && mobile_number!=="")
+    setPhone(country_code + mobile_number)
+  }, [mobile_number,country_code]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b to-teal-300 from-indigo-500 flex justify-center items-center">
+      <ToastContainer />
       <div className=" flex flex-col w-[70%] sm:w-[40%] md:w-[30%] lg:w-[25%] mx-auto border border-slate-800 rounded-2xl shadow-2xl p-2 bg-white">
         <h2 className="text-center font-bold my-2 text-2xl">Sign Up</h2>
         <form action="" className="flex flex-col items-left">
+          {requireUserName ? (
+            <div className="text-red-600  pl-3">*{error}</div>
+          ) : null}
           <input
             autoComplete={"on"}
             className="m-2 p-3 border border-slate-600 rounded-md bg-slate-100 placeholder-gray-600"
-            onChange={formik.handleChange}
-            value={formik.values.username}
+            onChange={(e) => {
+              setUserName(e.target.value);
+              setRequireOff();
+            }}
+
+            onBlur={(e) => {
+              
+              const userRef = collection(db, "users")
+              const q = query(userRef, where("username", "==", username));
+              
+              getDocs(q).then((data)=>{
+
+              })
+              .catch(()=>{
+                console.log('error')
+              })
+
+            }}
+
+            value={username}
             name="username"
             type="text"
             placeholder="Username"
           />
+          {requireEmail ? (
+            <div className="text-red-600  pl-3">*{error}</div>
+          ) : null}
           <input
             autoComplete={"on"}
             className="m-2 p-3 border border-slate-600 rounded-md bg-slate-100 placeholder-gray-600"
-            onChange={formik.handleChange}
-            value={formik.values.email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setRequireOff();
+            }}
+            value={email}
             name="email"
             type="email"
             placeholder="Email"
           />
 
+          {requirePassword ? (
+            <div className="text-red-600  pl-3">*{error}</div>
+          ) : null}
           <input
-            autoComplete={"on"}
             onCopy={(e) => e.preventDefault()}
             onPaste={(e) => e.preventDefault()}
             className="m-2 p-3 border border-slate-600 rounded-md bg-slate-100 placeholder-gray-600"
-            onChange={formik.handleChange}
-            value={formik.values.password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setRequireOff();
+            }}
+            value={password}
             name="password"
             type="password"
             placeholder="Password"
           />
+
+          {require_retype_password ? (
+            <div className="text-red-600  pl-3">*{error}</div>
+          ) : null}
           <input
-            autoComplete="on"
             onCopy={(e) => e.preventDefault()}
             onPaste={(e) => e.preventDefault()}
             className="m-2 p-3 border border-slate-600 rounded-md bg-slate-100 placeholder-gray-600"
-            onChange={formik.handleChange}
-            value={formik.values.retype_password}
+            onChange={(e) => {
+              setRetypePassword(e.target.value);
+              setRequireOff();
+              if (e.target.value !== password) setRequirePasswordMatch(true);
+              else setRequirePasswordMatch(false);
+            }}
+            value={retype_password}
             name="retype_password"
             type="password"
             placeholder="Confirm Password"
           />
+
+          {require_country_code || require_mobile_number ? (
+            <div className="text-red-600  pl-3">*{error}</div>
+          ) : null}
+          {require_password_match ? (
+            <div className="text-red-600 pl-3">{"password is not same"}</div>
+          ) : null}
           <div className="text-left flex">
             <select
               class="form-select"
               id="phone"
               name="phone"
-              className="m-2 p-3 border border-slate-600 rounded-md bg-slate-100 placeholder-gray-600 w-[30%]"
+              className="m-2 p-3 border border-slate-600 rounded-md bg-slate-100 placeholder-gray-600 w-[35%]"
+              value={country_code}
+              onChange={(e) => {
+                setCountryCode("+" + e.target.value);
+                setRequireOff();
+              }}
             >
-              <option value="">code</option>
+              <option value="">
+                {country_code !== "" ? country_code : "Code"}
+              </option>
               <option value="93">Afghanistan +93</option>
               <option value="358">Aland Islands +358</option>
               <option value="355">Albania +355</option>
@@ -333,17 +504,26 @@ const Signup = () => {
               <option value="260">Zambia +260</option>
               <option value="263">Zimbabwe +263</option>
             </select>
+
             <input
               autoComplete={"on"}
-              className="m-2 p-3 border border-slate-600 rounded-md bg-slate-100 placeholder-gray-600 w-[70%]"
-              onChange={formik.handleChange}
-              value={formik.values.mobile_number}
+              className="m-2 p-3 border border-slate-600 rounded-md bg-slate-100 placeholder-gray-600 w-[65%]"
+              onChange={(e) => {
+                setMobileNumber(e.target.value);
+                setRequireOff();
+              }}
+              value={mobile_number}
               name="mobile_number"
               type="tel"
+              maxLength={15}
               placeholder="Mobile Number"
             />
           </div>
-          <button className="p-3 m-2 border border-slate-800 rounded bg-blue-500 text-white cursor-pointer">
+
+          <button
+            className="p-3 m-2 border border-slate-800 rounded bg-blue-500 text-white cursor-pointer"
+            onClick={handleSignUp}
+          >
             Sign Up
           </button>
         </form>

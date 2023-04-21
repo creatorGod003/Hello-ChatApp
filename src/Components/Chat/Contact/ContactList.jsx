@@ -14,8 +14,8 @@ const ContactList = () => {
   message :
     [ 
       ['Mon, 10 Apr 2023 15:16:40 GMT',"Hi bro how are you?"],
-      ['Mon, 10 Apr 2023 16:16:40 GMT', "I am fine, what about you?"],
-      ['Mon, 10 Apr 2023 17:16:40 GMT', "I am also fine, what are you doing?"],
+      ['Mon, 18 Apr 2023 16:16:40 GMT', "I am fine, what about you?"],
+      ['Mon, 20 Apr 2023 17:16:40 GMT', "I am also fine, what are you doing?"],
     ]
   ,
 },
@@ -26,8 +26,8 @@ const ContactList = () => {
   message : 
     [ 
       ['Mon, 11 Apr 2023 15:16:40 GMT',"Hi bro how are you?"],
-      ['Mon, 11 Apr 2023 16:16:40 GMT', "I am fine, what about you?"],
-      ['Mon, 11 Apr 2023 17:16:40 GMT', "I am also fine, what are you doing?"],
+      ['Mon, 13 Apr 2023 16:16:40 GMT', "I am fine, what about you?"],
+      ['Mon, 14 Apr 2023 17:16:40 GMT', "I am also fine, what are you doing?"],
     ]
   ,
 },
