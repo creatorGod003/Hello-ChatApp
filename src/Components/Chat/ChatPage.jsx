@@ -1,7 +1,7 @@
 import { updateMobile } from '../../features/Responsiveness/responsiveSlice.js'
 import Contact from './Contact/Contact'
-import ChatPanel from './UserChat/ChatPanel'
-import MyChatPanel from './UserChat/MyChatPanel'
+import ChatPanel from './ChatPanel/ChatPanel.jsx'
+import MyChatPanel from './ChatPanel/MyChatPanel.jsx'
 
 import { useDispatch, useSelector } from 'react-redux'
 

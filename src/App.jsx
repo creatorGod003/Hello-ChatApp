@@ -7,7 +7,7 @@ import Signup from "./Components/Authentication/Signup";
 import Content from "./Components/Home/Content";
 import About from "./Components/Home/About";
 import RequireAuth from "./Components/Authentication/RequireAuth";
-import ChatPanel from "./Components/Chat/UserChat/ChatPanel";
+import ChatPanel from "./Components/Chat/ChatPanel/ChatPanel";
 import { useDispatch, useSelector } from 'react-redux'
 import Page404 from "./Components/Page404/Page404.jsx";
 import { updateMobile } from "./features/Responsiveness/responsiveSlice";

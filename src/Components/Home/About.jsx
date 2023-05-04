@@ -11,7 +11,7 @@ const About = () => {
           <header className='font-bold text-3xl'>About Us</header>
           <main className='my-20 first-letter:text-5xl text-2xl'><span className="font-mono text-3xl">Hello</span> a text based chatting app. Implementing latest technologies. Connect you with our world. <br /><span className='my-8 block'>Have fun!</span></main>
           <footer>
-            <Link to="/home" className='bg-blue-400 p-4 text-white rounded-lg hover:bg-white hover:text-black hover:border-blue-700 hover:border-4 cursor-pointer '>
+            <Link to="/home" className='bg-blue-500 p-4 text-white rounded-lg hover:bg-blue-800 cursor-pointer '>
               Contact Us
             </Link>
           </footer>

@@ -7,7 +7,7 @@ const NavBar = () => {
   function toggleSidebar() {
       showSidebar?setShowSidebar(false):setShowSidebar(true)
   }
-
+  
   return (
     <>
       <nav
