@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Picker, { EmojiStyle } from "emoji-picker-react";
 import { configureEmojiPanel } from "../../../features/emoji/emojiSlice";
 import { useEffect, useState } from "react";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { doc, getDoc} from "firebase/firestore";
 import { db } from "../../FirebaseConfigs/FirebaseConfig";
 
 

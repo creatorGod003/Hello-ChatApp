@@ -4,13 +4,13 @@ import { useAuth } from '../Context/Auth'
 
 const RequireAuth = (props) => {
 
-    const auth = useAuth();
+    const globalAuth = useAuth();
     const location = useLocation();
 
-    if(auth.user===null){
+    if(globalAuth.user===null){
         return <Navigate to={"/login"} state={{path : location.pathname }}/>
     }
-    console.log(auth)
+    console.log(globalAuth.user)
 
   return (
     props.children

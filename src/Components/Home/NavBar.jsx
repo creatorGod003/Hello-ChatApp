@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../Context/Auth";
 
 const NavBar = () => {
   const [showSidebar, setShowSidebar] = useState(false);
 
   function toggleSidebar() {
-      showSidebar?setShowSidebar(false):setShowSidebar(true)
+    showSidebar ? setShowSidebar(false) : setShowSidebar(true)
   }
-  
+
+  const globalAuth = useAuth()
+
   return (
     <>
       <nav
@@ -60,7 +63,9 @@ const NavBar = () => {
             </nav>
           </div>
 
-          <div
+          {
+            globalAuth.user===null?(
+              <div
             className="order-2 md:order-3 flex flex-wrap items-center justify-end mr-0 md:mr-4"
             id="nav-content"
           >
@@ -79,42 +84,44 @@ const NavBar = () => {
               </Link>
             </div>
           </div>
+            ):(<div className="order-2 bg-blue-500 text-white p-2 rounded"><Link to={`/user/${"creatorGod003"}`} className="text-black font-bold">creatorGod003</Link></div>)
+          }
         </div>
       </nav>
 
-      {showSidebar? <nav id="sidebar" className="w-[50vw] h-screen absolute left-0 bg-white top-0 border">
+      {showSidebar ? <nav id="sidebar" className="w-[50vw] h-screen absolute left-0 bg-white top-0 border">
         <div
           className="relative flex justify-center m-5"
           id="menu"
         >
-            <ul className="flex flex-col">
-              <Link
-                to="home"
-                className="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2"
-                onClick={toggleSidebar}
-              >
-                Home
-              </Link>
-              <Link
-                to="chat"
-                className="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2"
-                onClick={toggleSidebar}
-              >
-                Chat
-              </Link>
-              <Link
-                to="about"
-                className="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2"
-                onClick={toggleSidebar}
-              >
-                About
-              </Link>
-            </ul>
-            
-         <button className="text-2xl absolute top-0 right-0 text-blue-700  " onClick={toggleSidebar}>X</button>
+          <ul className="flex flex-col">
+            <Link
+              to="home"
+              className="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2"
+              onClick={toggleSidebar}
+            >
+              Home
+            </Link>
+            <Link
+              to="chat"
+              className="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2"
+              onClick={toggleSidebar}
+            >
+              Chat
+            </Link>
+            <Link
+              to="about"
+              className="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2"
+              onClick={toggleSidebar}
+            >
+              About
+            </Link>
+          </ul>
+
+          <button className="text-2xl absolute top-0 right-0 text-blue-700  " onClick={toggleSidebar}>X</button>
         </div>
       </nav> : null}
-      
+
     </>
   );
 };

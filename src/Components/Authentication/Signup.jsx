@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../FirebaseConfigs/FirebaseConfig";
+import { db, firebaseAuth } from "../FirebaseConfigs/FirebaseConfig";
 import { QuerySnapshot, addDoc, collection, doc, getDoc, getDocs, query, setDoc, where } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link, useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 const Signup = () => {
+
+  const navigate = useNavigate();
 
   // states
   const [username, setUserName] = useState("");
@@ -25,6 +29,9 @@ const Signup = () => {
   const [require_mobile_number, setRequireMobileNumber] = useState(false);
   const [require_password_match, setRequirePasswordMatch] = useState(false);
 
+  const [userNameAlreadyExists, setUserNameAlreadyExists] = useState(false);
+  const [emailAlreadyExists, setEmailAlreadyExists] = useState(false);
+  const [phoneAlreadyExists, setPhoneAlreadyExists] = useState(false);
 
   function setRequireOff() {
     setRequireUsername(false);
@@ -91,7 +98,7 @@ const Signup = () => {
 
     console.log("update firestore content") 
     updateDetails();
-    
+    addUserToFirebase();
     // toast notification
     toast.success("Account Created Successfully", {
       position: "bottom-left",
@@ -128,39 +135,72 @@ const Signup = () => {
     }
   }
 
+  function addUserToFirebase(){
+    createUserWithEmailAndPassword(firebaseAuth, email, password)
+  .then((userCredential) => { 
+    const user = userCredential.user;
+    console.log(user)
+    updateUserToFirebase();
+    navigate("/login")    
+  })
+  .catch((error) => {
+    console.log(error)
+  });
+
+  }
+
+  function updateUserToFirebase(){
+    updateProfile(firebaseAuth.currentUser, {
+      phoneNumber: phone
+    }).then(() => {
+      console.log("Profile Updated Successfully")
+    }).catch((error) => {
+        console.log("error")
+    });
+  }
+
   useEffect(() => {
     if(country_code!=="" && mobile_number!=="")
     setPhone(country_code + mobile_number)
   }, [mobile_number,country_code]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b to-teal-300 from-indigo-500 flex justify-center items-center">
+    <div className="min-h-screen bg-gradient-to-b to-teal-300 from-indigo-500 flex flex-col justify-center items-center">
       <ToastContainer />
-      <div className=" flex flex-col w-[70%] sm:w-[40%] md:w-[30%] lg:w-[25%] mx-auto border border-slate-800 rounded-2xl shadow-2xl p-2 bg-white">
+      <div className="flex flex-col w-[70%] sm:w-[40%] md:w-[30%] lg:w-[25%] mx-auto border border-slate-800 rounded-2xl shadow-2xl p-2 bg-white">
         <h2 className="text-center font-bold my-2 text-2xl">Sign Up</h2>
         <form action="" className="flex flex-col items-left">
           {requireUserName ? (
             <div className="text-red-600  pl-3">*{error}</div>
           ) : null}
+          {userNameAlreadyExists ? <div className="text-red-600 pl-3">Username already exists</div> : null}
           <input
             autoComplete={"on"}
             className="m-2 p-3 border border-slate-600 rounded-md bg-slate-100 placeholder-gray-600"
             onChange={(e) => {
+              setUserNameAlreadyExists(false)
               setUserName(e.target.value);
               setRequireOff();
             }}
 
-            onBlur={(e) => {
+            onMouseLeave={(e) => {
               
-              const userRef = collection(db, "users")
-              const q = query(userRef, where("username", "==", username));
-              
-              getDocs(q).then((data)=>{
+              if(username.length!==0){
 
-              })
-              .catch(()=>{
-                console.log('error')
-              })
+                const userRef = collection(db, "users")
+                const q = query(userRef, where("username", "==", username));
+                
+                getDocs(q).then((data)=>{
+                  if(data.docs.length!==0){
+                    setUserNameAlreadyExists(true)
+                    console.log(data.docs.length!==0)
+                  }
+                })
+                .catch(()=>{
+                  console.log('error')
+                })
+
+              }
 
             }}
 
@@ -200,6 +240,7 @@ const Signup = () => {
             name="password"
             type="password"
             placeholder="Password"
+            autoComplete="off"
           />
 
           {require_retype_password ? (
@@ -219,6 +260,7 @@ const Signup = () => {
             name="retype_password"
             type="password"
             placeholder="Confirm Password"
+            autoComplete="off"
           />
 
           {require_country_code || require_mobile_number ? (
@@ -229,10 +271,10 @@ const Signup = () => {
           ) : null}
           <div className="text-left flex">
             <select
-              class="form-select"
+              
               id="phone"
               name="phone"
-              className="m-2 p-3 border border-slate-600 rounded-md bg-slate-100 placeholder-gray-600 w-[35%]"
+              className="form-select m-2 p-3 border border-slate-600 rounded-md bg-slate-100 placeholder-gray-600 w-[35%]"
               value={country_code}
               onChange={(e) => {
                 setCountryCode("+" + e.target.value);
@@ -528,6 +570,7 @@ const Signup = () => {
           </button>
         </form>
       </div>
+      <div className="w-[70%] sm:w-[40%] md:w-[30%] lg:w-[25%] mx-auto text-center my-2">Already signup? <Link to={"/login"} className="underline font-bold">Login</Link></div>
     </div>
   );
 };

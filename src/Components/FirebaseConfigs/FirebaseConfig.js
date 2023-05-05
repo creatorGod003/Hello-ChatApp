@@ -1,5 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 // import { getAuth, RecaptchaVerifier } from "firebase/auth";
 
@@ -17,7 +18,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const firebaseAuth = getAuth(app);
 export default app
-export { db }
+export { db,firebaseAuth }
+
 
 
