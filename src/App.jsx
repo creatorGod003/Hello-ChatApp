@@ -11,9 +11,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import Page404 from "./Components/Page404/Page404.jsx";
 import { updateMobile } from "./features/Responsiveness/responsiveSlice";
 import Login from "./Components/Authentication/Login";
-import LoginUsingEmail from "./Components/Authentication/LoginUsingEmail";
-import LoginUsingNumber from "./Components/Authentication/LoginUsingNumber";
 import UserDashboard from "./Components/UserPage/UserDashboard";
+import EditProfile from "./Components/UserPage/EditProfile";
+import ProfileSetting from "./Components/UserPage/ProfileSetting";
+import LoginUsingEmailOrNumber from "./Components/Authentication/LoginUsingEmailOrNumber";
 
 function App() {
 
@@ -32,8 +33,7 @@ function App() {
           <Route path="login" element={<Login/>}/>
           <Route path="signup" element={<Signup/>} />
           <Route path="about" element={<About/>}/>
-          <Route path="login-with-email" element={<LoginUsingEmail/>}/>
-          <Route path="login-with-phone" element={<LoginUsingNumber/>}/>
+          <Route path="login-with-emailOrNumber" element={<LoginUsingEmailOrNumber/>}/>\
         </Route>
 
         <Route path="chat" element={
@@ -43,9 +43,11 @@ function App() {
         }/>
 
         <Route path="user/:userid" element={<UserDashboard/>} />
+        <Route path="user/:userid/edit" element={<EditProfile/>}/>
+        <Route path="user/:userid/setting" element={<ProfileSetting/>} />
 
         {
-          isMobile?<Route path="chatpanel" element={<ChatPanel user={user} />}/>:""
+          isMobile?<Route path="chatpanel" element={<ChatPanel user={user} />}/>:null
         }
               
         <Route path="*" element={<Page404/>} />

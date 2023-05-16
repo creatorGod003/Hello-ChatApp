@@ -14,7 +14,7 @@ const ChatPage = () => {
   console.log('isMobile', isMobile)
 
   return (
-    <div className='h-screen '>
+    <div className='h-screen'>
       {
         isMobile?<Contact/>:
         
