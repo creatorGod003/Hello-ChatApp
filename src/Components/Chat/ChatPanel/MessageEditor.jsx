@@ -68,18 +68,21 @@ const MessageEditor = () => {
       </div>
       {/* Message input field */}
       <div className="w-full h-full flex">
-        <input
-          type="text"
-          name=""
-          id="text-editor"
-          className="inline-block w-full h-full p-2 text-lg placeholder:text-gray-600 rounded-md focus:outline-none  break-words"
-          placeholder="Enter messages"
+
+      <textarea
+          name="description"
+          id="description"
+          className="w-full h-full rounded-md p-2 placeholder-slate-600 resize-none border-gray-400 shadow-sm"
+          placeholder="Enter your message here..."
           value={text}
-          onChange={inputOnChangeHandler}
+          onChange={
+            inputOnChangeHandler
+          }
           onFocus={handleFocus}
           onBlur={handleBlur}
           
-        />
+        ></textarea>
+        
       </div>
       {/* Send button */}
       <div>
