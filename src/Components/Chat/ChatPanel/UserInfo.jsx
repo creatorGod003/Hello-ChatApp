@@ -32,7 +32,8 @@ const UserInfo = (props) => {
         <div className="flex items-center mx-4">
           <div className="flex items-center">
             <img
-              src={props.user.userImg}
+            // userimage
+              src={"/Images/avatar1.jpeg"}
               alt=""
               className="w-12 h-12 rounded-full"
             />

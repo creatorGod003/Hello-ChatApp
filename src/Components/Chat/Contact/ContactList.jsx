@@ -1,65 +1,52 @@
-import React, { useState } from 'react'
-import UserContact from './UserContact'
-
+import React, { useState, useEffect,useRef } from "react";
+import UserContact from "./UserContact";
+import { useDispatch, useSelector } from "react-redux";
+import { db } from "../../FirebaseConfigs/FirebaseConfig";
+import { collection, query, getDocs } from "firebase/firestore";
+import { addContacts } from "../../../features/ContactSelect/contactSelectSlice";
 
 const ContactList = () => {
+  const [userData, setUserData] = useState([]);
+  const userDataRef = useRef([])
 
-  // eslint-disable-next-line no-unused-vars
-  const [userData, setUserData] = useState([
+  const loggedInUser = useSelector((state) => {
+    return state.userSignIn.user;
+  });
+  const dispatch = useDispatch();
+  const numberOfContact = useRef(0);
 
-{
-  userId: "ashutoshranjan003",
-  username:  'Ashutosh Ranjan',
-  userImg : 'Images/avatar1.jpeg',
-  message :
-    [ 
-      ['Mon, 10 Apr 2023 15:16:40 GMT',"Hi bro how are you?"],
-      ['Mon, 18 Apr 2023 16:16:40 GMT', "I am fine, what about you?"],
-      ['Mon, 20 Apr 2023 17:16:40 GMT', "I am also fine, what are you doing?"],
-    ]
-  ,
-},
-{
-  userId: "manishsaw238",
-  username:  'Manish Saw',
-  userImg : 'Images/avatar1.jpeg',
-  message : 
-    [ 
-      ['Mon, 11 Apr 2023 15:16:40 GMT',"Hi bro how are you?"],
-      ['Mon, 13 Apr 2023 16:16:40 GMT', "I am fine, what about you?"],
-      ['Mon, 14 Apr 2023 17:16:40 GMT', "I am also fine, what are you doing?"],
-    ]
-  ,
-},
-{
-  userId: "rahulkumar293",
-  username:  'Rahul Kumar',
-  userImg : 'Images/avatar1.jpeg',
-  message :
-    [ 
-      ['Mon, 10 Apr 2023 15:16:40 GMT',"Hi bro how are you?"],
-      ['Mon, 11 Apr 2023 16:18:40 GMT', "I am fine, what about you?"],
-      ['Mon, 12 Apr 2023 17:19:40 GMT', "I am also fine, what are you doing?"],
-    ]
-  ,
-},
+  async function fetchUserData() {
+    const q = query(collection(db, "users"));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      if(doc.data.email !== JSON.parse(loggedInUser).email){
+        console.log(doc.id, " => ", doc.data());
+        userDataRef.current.push(doc.data())
+        numberOfContact.current+=1
+      }
+    });
 
-]) 
+    dispatch(addContacts(numberOfContact.current))
+    setUserData(userDataRef.current);
+  }
 
-  const [ anyContactSelected, setAnyContactSelected ] = useState(true)
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 
   return (
-
-    <div className='p-2 my-3 flex flex-col h-[75vh] justify-start overflow-y-auto cursor-pointer'>
-        {
-          userData.map((user, index) => {
-            return <UserContact key={index} userData={user} contactSelect = {anyContactSelected} setContactSelect={setAnyContactSelected} />
-          })
-        }
+    <div className="p-2 my-3 flex flex-col h-[75vh] justify-start overflow-y-auto cursor-pointer">
+      {userData.map((user, index) => {
+        return (
+          <UserContact
+            key={index}
+            index = {index}
+            userData={user}
+          />
+        );
+      })}
     </div>
+  );
+};
 
-  )
-
-}
-
-export default ContactList
+export default ContactList;

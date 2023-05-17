@@ -8,9 +8,9 @@ import { useDispatch, useSelector } from 'react-redux'
 const ChatPage = () => {
 
   const user = useSelector((state)=> {return state.user.user});
+  const isMobile = useSelector((state)=>{return state.responsive.isMobile}) 
   const dispatch = useDispatch()
   dispatch(updateMobile())
-  const isMobile = useSelector((state)=>{return state.responsive.isMobile}) 
   console.log('isMobile', isMobile)
 
   return (

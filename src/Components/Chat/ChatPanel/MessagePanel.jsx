@@ -11,12 +11,15 @@ const MessagePanel = (props) => {
   
   const[senderMessage, setSenderMessage] = useState([])
   const[receiverMessage, setReceiverMessage] = useState([])
+  const [userSelected, setUserSelected] = useState(props.userSelected);
+  const loggedInUser = useSelector((state) => {
+    return JSON.parse(state.userSignIn.user);
+  });
 
-  useEffect(() => {
-    
+  useEffect(() => {    
     
     async function fetchSenderMessage() {
-      const docRef = doc(db, `/conversation/CoolCat23/conversation_with_whom`, `creatorGod003`);
+      const docRef = doc(db, `/conversation/CoolCat23/conversation_with_whom`, "creatorGod003");
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         let data = docSnap.data().chat; 
