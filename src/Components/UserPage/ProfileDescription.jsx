@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { db } from "../FirebaseConfigs/FirebaseConfig";
 import { useSelector } from "react-redux";
 
-const ProfileDescription = (props) => {
+const ProfileDescription = () => {
   const [editable, setEditable] = useState(false);
   const [showButton, setShowButton] = useState(false);
 

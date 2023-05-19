@@ -16,32 +16,34 @@ const NavBar = () => {
 
   const globalAuth = useAuth();
   const navigate = useNavigate();
-  const [userName , setUserName] = useState("Welcome")
+  const [userName, setUserName] = useState("Welcome");
 
-  const loggedInUser= useSelector((state)=>{return state.userSignIn.user}) 
-  const dispatch = useDispatch()
+  const loggedInUser = useSelector((state) => {
+    return state.userSignIn.user;
+  });
+  const dispatch = useDispatch();
 
- async function getUserId(){
-  console.log(loggedInUser)
-   if(loggedInUser !== null){
-        const obj = JSON.parse(loggedInUser)  
-        console.log(obj.email)
-        const docRef = doc(db, "users", obj.email);
-        const docSnap = await getDoc(docRef);
+  async function getUserId() {
+    console.log(loggedInUser);
+    if (loggedInUser !== null) {
+      const obj = JSON.parse(loggedInUser);
+      console.log(obj.email);
+      const docRef = doc(db, "users", obj.email);
+      const docSnap = await getDoc(docRef);
 
-        if (docSnap.exists()) {
-          setUserName(docSnap.data().username)
-          dispatch(updateUserId(docSnap.data().username))
-        } else {
-          console.log("No such document!");
-        }
-    } 
+      if (docSnap.exists()) {
+        setUserName(docSnap.data().username);
+        dispatch(updateUserId(docSnap.data().username));
+      } else {
+        console.log("No such document!");
+      }
+    }
   }
 
-  useEffect(()=>{
-    getUserId()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[loggedInUser])
+  useEffect(() => {
+    getUserId();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loggedInUser]);
 
   return (
     <>
@@ -117,11 +119,7 @@ const NavBar = () => {
             </div>
           ) : (
             <div className="order-2 bg-gradient-to-r from-blue-500 to-teal-500 text-white p-2 rounded">
-              <Link
-                to={`/user/${userName}`}
-                className="text-black font-bold"
-              >
-                
+              <Link to={`/user/${userName}`} className="text-black font-bold">
                 {userName}
               </Link>
             </div>
@@ -158,32 +156,38 @@ const NavBar = () => {
                 About
               </Link>
 
-              {
-                globalAuth.user === null ? null :
+              {globalAuth.user === null ? null : (
                 <button
-                className="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2"
-                onClick={
-                  () => {
+                  className="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2"
+                  onClick={() => {
                     globalAuth.logout();
                     navigate("/home");
-                    toggleSidebar()
-                  }
-                }
-              >
-                Sign Out
-              </button>
-              }
-              
+                    toggleSidebar();
+                  }}
+                >
+                  Sign Out
+                </button>
+              )}
             </ul>
 
             <button
               className="text-2xl absolute top-0 right-0 text-black"
               onClick={toggleSidebar}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" />
-</svg>
-
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="animate-bounce w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5"
+                />
+              </svg>
             </button>
           </div>
         </nav>

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes,listAll, deleteObject } from "firebase/storage";
 import { db, storage } from "../FirebaseConfigs/FirebaseConfig";
-import { type } from "@testing-library/user-event/dist/type";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const UserDashboard = () => {
@@ -12,100 +11,110 @@ const UserDashboard = () => {
   const invalidUser = false;
 
   const loggedInUserId = useSelector((state) => state.userSignIn.userId);
-  const loggedInUserEmail = useSelector((state) => JSON.parse(state.userSignIn.user).email); 
+  const loggedInUserEmail = useSelector(
+    (state) => JSON.parse(state.userSignIn.user).email
+  );
 
-  function uploadFile(e){    
+  function uploadFile(e) {
+
+
+    const folderRef = ref(storage, `images/${loggedInUserId}`)
+    listAll(folderRef).then((listResults) => {
+        listResults.items.forEach((itemRef) => {
+          deleteObject(itemRef).then(() => {
+            console.log(`File deleted successfully`)
+          }).catch((error) => {
+            console.log("Error deleting file", error)
+          });
+        })
+    });
 
     const file = e.target.files[0];
-    console.log(typeof(file), file)
+    console.log(typeof file, file);
     let reader = new FileReader();
-    console.log(typeof(reader), reader)
+    console.log(typeof reader, reader);
     reader.readAsArrayBuffer(file);
-    const storageRef = ref(storage,`images/${loggedInUserId}/${file.name}`);
-    reader.onload = function() {
-      
+    const storageRef = ref(storage, `images/${loggedInUserId}/${file.name}`);
+    reader.onload = function () {
       uploadBytes(storageRef, reader.result).then((snapshot) => {
-        
-        getDownloadURL(ref(storage, `images/${loggedInUserId}/${file.name}`)).then((url) => {
-
+        getDownloadURL(ref(storage, `images/${loggedInUserId}/${file.name}`))
+          .then((url) => {
             document.getElementById("profile-photo-preview").src = url;
-            updateUserProfileURL(url)
-
-        }).catch((error) => {
-          console.log(error)
-        })
-
+            updateUserProfileURL(url);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       });
-
-    }
-    reader.onerror = function() {
+    };
+    reader.onerror = function () {
       console.log(reader.error);
     };
   }
 
-  async function handleProfilePhoto(){
-
+  async function handleProfilePhoto() {
     const docRef = doc(db, "users", loggedInUserEmail);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
       console.log("Document data:", docSnap.data());
-      if(docSnap.data().profileURL){
-        document.getElementById("profile-photo-preview").src = docSnap.data().profileURL;  
-      }
-     else {
-      
-      let character = loggedInUserId.charAt(0).toLowerCase();
-      let regExp = /[a-z]/i;
-      let numberRegExp = /[0-9]/i;
+      if (docSnap.data().profileURL) {
+        document.getElementById("profile-photo-preview").src =
+          docSnap.data().profileURL;
+      } else {
+        let character = loggedInUserId.charAt(0).toLowerCase();
+        let regExp = /[a-z]/i;
+        let numberRegExp = /[0-9]/i;
 
-      if(regExp.test(character)){
-        document.getElementById("profile-photo-preview").src = `/Images/user_${character}.jpeg`;
-      }
-      else if(numberRegExp.test(character)){
-        let n = Math.floor(Math.random()*10)
-        document.getElementById("profile-photo-preview").src = `/Images/$user_num_${n}.jpeg`;
-      }
-      else{
-        document.getElementById("profile-photo-preview").src = `/Images/user_special.jpeg`;
-      }
+        var URL = "";
 
+        if (regExp.test(character)) {
+          URL = `/Images/user_${character}.jpeg`;
+        } else if (numberRegExp.test(character)) {
+          let n = Math.floor(Math.random() * 10);
+          URL = `/Images/$user_num_${n}.jpeg`;
+        } else {
+          URL = `/Images/user_special.jpeg`;
+        }
+
+        document.getElementById("profile-photo-preview").src = URL;
+
+        updateUserProfileURL(URL);
+      }
+    } else {
+      console.log("No such document!");
     }
-}
-else{
-  console.log("No such document!");
-}
   }
 
-
-  function updateUserProfileURL(URL){
-
-    console.log(loggedInUserEmail)
-    const userDataRef = doc(db, 'users', loggedInUserEmail);
-    setDoc(userDataRef, { profileURL: URL }, { merge: true });    
-
+  function updateUserProfileURL(URL) {
+    console.log(loggedInUserEmail);
+    const userDataRef = doc(db, "users", loggedInUserEmail);
+    setDoc(userDataRef, { profileURL: URL }, { merge: true });
   }
 
   useEffect(() => {
-    handleProfilePhoto()
-  },[])
-
+    handleProfilePhoto();
+  }, []);
 
   return (
     <div className="">
       {invalidUser ? (
         <div className="text-red">Invalid User</div>
       ) : (
-        <div className="grid grid-rows-6 grid-cols-4 h-screen "> 
+        <div className="grid grid-rows-6 grid-cols-4 h-screen ">
           <div className="grid col-span-full row-start-1 row-span-2 bg-gradient-to-b from-blue-500 to-teal-500 place-items-center rounded-b-xl shadow-lg shadow-slate-400">
             <div className="flex flex-col items-center">
               <div className="relative">
-                <input type="file" id="profile-photo" className="w-8 h-8 rounded-full absolute top-0 right-0 bg-inherit z-10 bg-blue-200 opacity-0" onChange={
-                  uploadFile
-                } />
+                <input
+                  type="file"
+                  id="profile-photo"
+                  className="w-8 h-8 rounded-full absolute top-0 right-0 bg-inherit z-10 bg-blue-200 opacity-0"
+                  onChange={uploadFile}
+                />
                 <img
                   id="profile-photo-preview"
-                  alt=""
+                  alt="profile"
+                  loading="eager"
                   src=""
                   className="w-20 h-20 rounded-full border-4 border-white border-l-0 border-t-0 opacity-70"
                 />
@@ -181,18 +190,35 @@ else{
                 </svg>
                 Edit Profile
               </Link>
+
+              <Link
+                to={`/home`}
+                className="flex justify-center my-2 hover:cursor-pointer"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+                  />
+                </svg>
+                Home
+              </Link>
             </div>
           </div>
 
           <div className="row-start-6 row-span-full col-span-full place-self-center">
-                Made with ❤️ by Ashutosh Ranjan
+            Made with ❤️ by Ashutosh Ranjan
           </div>
-
         </div>
-
       )}
-
-      
     </div>
   );
 };

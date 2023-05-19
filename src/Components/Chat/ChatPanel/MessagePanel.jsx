@@ -3,72 +3,74 @@ import { useDispatch, useSelector } from "react-redux";
 import Picker, { EmojiStyle } from "emoji-picker-react";
 import { configureEmojiPanel } from "../../../features/emoji/emojiSlice";
 import { useEffect, useState } from "react";
-import { doc, getDoc} from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../FirebaseConfigs/FirebaseConfig";
 
-
 const MessagePanel = (props) => {
-  
-  const[senderMessage, setSenderMessage] = useState([])
-  const[receiverMessage, setReceiverMessage] = useState([])
-  const [userSelected, setUserSelected] = useState(props.userSelected);
-  const loggedInUser = useSelector((state) => {
-    return JSON.parse(state.userSignIn.user);
-  });
+  const [senderMessage, setSenderMessage] = useState([]);
+  const [receiverMessage, setReceiverMessage] = useState([]);
 
-  useEffect(() => {    
-    
+  const senderUserId = useSelector((state) => state.userSignIn.userId);
+  const receiverUserId = useSelector((state) => state.user.user.username);
+
+  useEffect(() => {
     async function fetchSenderMessage() {
-      const docRef = doc(db, `/conversation/CoolCat23/conversation_with_whom`, "creatorGod003");
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        let data = docSnap.data().chat; 
-
-        let tempSenderMessage = []
-        for(let key in data){
-          if(data.hasOwnProperty(key)){
-            tempSenderMessage.push([String(key), data[key]])
-          }
-        }
-        setSenderMessage(tempSenderMessage)
-      } else {
-        console.log("No such document!");
-      }
-    }
-  
-
-    async function fetchReceiverMessage(){
-      const docRef = doc(db, "/conversation/creatorGod003/conversation_with_whom", "CoolCat23");
+      const docRef = doc(
+        db,
+        `/conversation/${receiverUserId}/conversation_with_whom`,
+        senderUserId
+      );
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         let data = docSnap.data().chat;
 
-        let tempReceiverMessage = []
-        for(let key in data){
-          if(data.hasOwnProperty(key)){
-            tempReceiverMessage.push([String(key), data[key]])
+        let tempSenderMessage = [];
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+            tempSenderMessage.push([String(key), data[key]]);
           }
         }
-        setReceiverMessage(tempReceiverMessage)
+        setSenderMessage(tempSenderMessage);
       } else {
         console.log("No such document!");
       }
     }
 
-    fetchReceiverMessage()
-    fetchSenderMessage()
+    async function fetchReceiverMessage() {
+      const docRef = doc(
+        db,
+        `/conversation/${senderUserId}/conversation_with_whom`,
+        receiverUserId
+      );
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        let data = docSnap.data().chat;
 
-  },[])
+        let tempReceiverMessage = [];
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+            tempReceiverMessage.push([String(key), data[key]]);
+          }
+        }
+        setReceiverMessage(tempReceiverMessage);
+      } else {
+        console.log("No such document!");
+      }
+    }
+
+    fetchReceiverMessage();
+    fetchSenderMessage();
+  }, []);
 
   const dispatch = useDispatch();
-  const [text ,setText] = useSelector((state) => {
+  const [text, setText] = useSelector((state) => {
     return state.emojipicker.update_textEditor;
   });
 
   useEffect(() => {
     console.log("re-rendered");
     dispatch(configureEmojiPanel(false));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const emojiSelected = useSelector((state) => {
@@ -76,13 +78,16 @@ const MessagePanel = (props) => {
   });
 
   const onEmojiClick = (event) => {
-    setText(text+event.emoji)
+    setText(text + event.emoji);
   };
-  
+
   return (
     <div className="overflow-y-auto bg-pattern1">
       <div className="">
-          <ShowMessage receiverMessage={receiverMessage} senderMessage={senderMessage}/>
+        <ShowMessage
+          receiverMessage={receiverMessage}
+          senderMessage={senderMessage}
+        />
       </div>
       {emojiSelected && (
         <div className="inline-block sticky bottom-0">

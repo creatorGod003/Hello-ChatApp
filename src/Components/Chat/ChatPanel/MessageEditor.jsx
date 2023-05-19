@@ -1,51 +1,53 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch} from "react-redux";
-import { configureEmojiPanel, updateTextEditor} from "../../../features/emoji/emojiSlice";
+import { useDispatch } from "react-redux";
+import {
+  configureEmojiPanel,
+  updateTextEditor,
+} from "../../../features/emoji/emojiSlice";
 
 const MessageEditor = () => {
-
-
   const [emojiSelected, setEmojiSelected] = useState(false);
   const [text, setText] = useState("");
   const dispatch = useDispatch();
   const micRef = useRef();
   const panelRef = useRef();
 
-
   useEffect(() => {
-    dispatch(updateTextEditor([text, setText]))
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [text])
+    dispatch(updateTextEditor([text, setText]));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text]);
 
-  function toggleEmojiPicker(){
-    setEmojiSelected(!emojiSelected)
-    dispatch(configureEmojiPanel(!emojiSelected))
+  function toggleEmojiPicker() {
+    setEmojiSelected(!emojiSelected);
+    dispatch(configureEmojiPanel(!emojiSelected));
   }
-  function inputOnChangeHandler(e){
-    setText(e.target.value)
+  function inputOnChangeHandler(e) {
+    setText(e.target.value);
   }
 
-  function handleFocus(){
-    panelRef.current.classList.remove('grid-cols-[45px,45px,1fr,45px,45px]')
-    micRef.current.classList.add('hidden')
-    panelRef.current.classList.add('grid-cols-[45px,45px,1fr,45px]')
-    
-    if(emojiSelected === true){
-      setEmojiSelected(false)
-      dispatch(configureEmojiPanel(false))
+  function handleFocus() {
+    panelRef.current.classList.remove("grid-cols-[45px,45px,1fr,45px,45px]");
+    micRef.current.classList.add("hidden");
+    panelRef.current.classList.add("grid-cols-[45px,45px,1fr,45px]");
+
+    if (emojiSelected === true) {
+      setEmojiSelected(false);
+      dispatch(configureEmojiPanel(false));
     }
-    
   }
-  function handleBlur(){
-    panelRef.current.classList.remove('grid-cols-[45px,45px,1fr,45px]')
-    micRef.current.classList.remove('hidden')
-    panelRef.current.classList.add('grid-cols-[45px,45px,1fr,45px,45px]')
+  function handleBlur() {
+    panelRef.current.classList.remove("grid-cols-[45px,45px,1fr,45px]");
+    micRef.current.classList.remove("hidden");
+    panelRef.current.classList.add("grid-cols-[45px,45px,1fr,45px,45px]");
   }
 
-  console.log("Rendered from bottom")
+  console.log("Rendered from bottom");
 
   return (
-    <div className="bg-blue-400 p-4 grid grid-rows-1 grid-cols-[45px,45px,1fr,45px,45px]  md:grid-cols-[60px,60px,1fr,60px,60px]  place-items-center " ref={panelRef}>
+    <div
+      className="bg-blue-400 p-4 grid grid-rows-1 grid-cols-[45px,45px,1fr,45px,45px]  md:grid-cols-[60px,60px,1fr,60px,60px]  place-items-center "
+      ref={panelRef}
+    >
       {/* Emoji picker */}
       <div className="bg-white rounded-full p-2" onClick={toggleEmojiPicker}>
         <button>
@@ -68,21 +70,16 @@ const MessageEditor = () => {
       </div>
       {/* Message input field */}
       <div className="w-full h-full flex">
-
-      <textarea
+        <textarea
           name="description"
           id="description"
           className="w-full h-full rounded-md p-2 placeholder-slate-600 resize-none border-gray-400 shadow-sm"
           placeholder="Enter your message here..."
           value={text}
-          onChange={
-            inputOnChangeHandler
-          }
+          onChange={inputOnChangeHandler}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          
         ></textarea>
-        
       </div>
       {/* Send button */}
       <div>
@@ -108,4 +105,4 @@ const MessageEditor = () => {
   );
 };
 
-export default MessageEditor
+export default MessageEditor;
