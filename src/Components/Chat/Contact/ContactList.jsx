@@ -19,7 +19,8 @@ const ContactList = () => {
     const q = query(collection(db, "users"));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      if(doc.data.email !== JSON.parse(loggedInUser).email){
+      
+      if(doc.data().email !== JSON.parse(loggedInUser).email){
         console.log(doc.id, " => ", doc.data());
         userDataRef.current.push(doc.data())
         numberOfContact.current+=1

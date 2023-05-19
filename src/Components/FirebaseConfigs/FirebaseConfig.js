@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 // import { getAuth, RecaptchaVerifier } from "firebase/auth";
 
 
@@ -19,8 +20,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const firebaseAuth = getAuth(app);
+const storage = getStorage(app)
 export default app
-export { db,firebaseAuth }
+export { db,firebaseAuth, storage}
 
 
 

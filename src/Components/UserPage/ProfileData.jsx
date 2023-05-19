@@ -70,7 +70,6 @@ const ProfileData = ({ props }) => {
           className="mx-4 my-2 rounded-md p-2.5 text-white bg-blue-600"
           onClick={
             () => {
-                // save the data
                 setEditable(false)
                 setShowButton(false)
                 document.getElementById(props.label).style.backgroundColor  = "rgb(226,232,240)";

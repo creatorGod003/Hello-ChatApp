@@ -1,11 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProfileData from "./ProfileData";
 import ProfileDescription from "./ProfileDescription";
 import { useNavigate } from "react-router-dom";
 import ProfileName from "./ProfileName";
+import { useSelector } from "react-redux";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../FirebaseConfigs/FirebaseConfig";
 
 const EditProfile = () => {
   const navigate = useNavigate();
+  const loggedInUserId = useSelector((state) => state.userSignIn.userId);
+  const loggedInUserEmail = useSelector((state) => JSON.parse(state.userSignIn.user).email); 
+  const [userNumber, setUserNumber] = useState("");
+  
+  function getUserNumber(){
+
+    const userDocRef = doc(db, "users", loggedInUserEmail);
+    getDoc(userDocRef).then((docSnap) => {
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+        setUserNumber(docSnap.data().phone)
+        // console.log(docSnap.data().phone)
+      } else {
+        console.log("No such document!");
+      }
+    }).catch((error) => {
+      console.log("Error getting document:", error);
+    });
+
+  }
+
+  useEffect(()=>{
+    getUserNumber()
+  }, [])
 
   return (
     <div className="grid grid-rows-[150px_1fr] grid-cols-1 h-screen ">
@@ -20,7 +47,7 @@ const EditProfile = () => {
             props={{
               label: "UserId",
               type: "text",
-              data: "creatorGod003",
+              data: loggedInUserId,
               editable: false,
             }}
           />
@@ -35,7 +62,7 @@ const EditProfile = () => {
             props={{
               label: "Email",
               type: "email",
-              data: "ranjan.ashutosh2003@gmail.com",
+              data: loggedInUserEmail,
               editable: false,
             }}
           />
@@ -43,12 +70,12 @@ const EditProfile = () => {
             props={{
               label: "Mobile Number",
               type: "text",
-              data: "+919525437080",
+              data: userNumber,
               editable: false,
             }}
           />
 
-          <ProfileDescription data={"namste 🙏"} />
+          <ProfileDescription data={"Hi, There"} />
         </div>
 
         <div className="mx-200 w-full text-center my-8">

@@ -1,13 +1,95 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { db, storage } from "../FirebaseConfigs/FirebaseConfig";
+import { type } from "@testing-library/user-event/dist/type";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const UserDashboard = () => {
   const params = useParams();
   const userId = params.userid;
   const invalidUser = false;
 
-  const loggedInUserId = useSelector((state) => state.userSignIn.userId); 
+  const loggedInUserId = useSelector((state) => state.userSignIn.userId);
+  const loggedInUserEmail = useSelector((state) => JSON.parse(state.userSignIn.user).email); 
+
+  function uploadFile(e){    
+
+    const file = e.target.files[0];
+    console.log(typeof(file), file)
+    let reader = new FileReader();
+    console.log(typeof(reader), reader)
+    reader.readAsArrayBuffer(file);
+    const storageRef = ref(storage,`images/${loggedInUserId}/${file.name}`);
+    reader.onload = function() {
+      
+      uploadBytes(storageRef, reader.result).then((snapshot) => {
+        
+        getDownloadURL(ref(storage, `images/${loggedInUserId}/${file.name}`)).then((url) => {
+
+            document.getElementById("profile-photo-preview").src = url;
+            updateUserProfileURL(url)
+
+        }).catch((error) => {
+          console.log(error)
+        })
+
+      });
+
+    }
+    reader.onerror = function() {
+      console.log(reader.error);
+    };
+  }
+
+  async function handleProfilePhoto(){
+
+    const docRef = doc(db, "users", loggedInUserEmail);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      if(docSnap.data().profileURL){
+        document.getElementById("profile-photo-preview").src = docSnap.data().profileURL;  
+      }
+     else {
+      
+      let character = loggedInUserId.charAt(0).toLowerCase();
+      let regExp = /[a-z]/i;
+      let numberRegExp = /[0-9]/i;
+
+      if(regExp.test(character)){
+        document.getElementById("profile-photo-preview").src = `/Images/user_${character}.jpeg`;
+      }
+      else if(numberRegExp.test(character)){
+        let n = Math.floor(Math.random()*10)
+        document.getElementById("profile-photo-preview").src = `/Images/$user_num_${n}.jpeg`;
+      }
+      else{
+        document.getElementById("profile-photo-preview").src = `/Images/user_special.jpeg`;
+      }
+
+    }
+}
+else{
+  console.log("No such document!");
+}
+  }
+
+
+  function updateUserProfileURL(URL){
+
+    console.log(loggedInUserEmail)
+    const userDataRef = doc(db, 'users', loggedInUserEmail);
+    setDoc(userDataRef, { profileURL: URL }, { merge: true });    
+
+  }
+
+  useEffect(() => {
+    handleProfilePhoto()
+  },[])
+
 
   return (
     <div className="">
@@ -18,9 +100,13 @@ const UserDashboard = () => {
           <div className="grid col-span-full row-start-1 row-span-2 bg-gradient-to-b from-blue-500 to-teal-500 place-items-center rounded-b-xl shadow-lg shadow-slate-400">
             <div className="flex flex-col items-center">
               <div className="relative">
+                <input type="file" id="profile-photo" className="w-8 h-8 rounded-full absolute top-0 right-0 bg-inherit z-10 bg-blue-200 opacity-0" onChange={
+                  uploadFile
+                } />
                 <img
+                  id="profile-photo-preview"
                   alt=""
-                  src="/Images/avatar1.jpeg"
+                  src=""
                   className="w-20 h-20 rounded-full border-4 border-white border-l-0 border-t-0 opacity-70"
                 />
                 <svg
