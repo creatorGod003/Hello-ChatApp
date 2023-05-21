@@ -1,17 +1,8 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef } from "react";
 
 // Responsible for showing messages
 
 const ShowMessage = (props) => {
-  // const receiverMessage = [
-  //   ['Mon, 10 Apr 2023 15:16:40 GMT', "Hi bro receiver", "mid:1138"],
-  //   ['Mon, 11 Apr 2023 16:18:40 GMT', "I am fine, from receiver side", "mid:1139"],
-  // ]
-
-  // const senderMessage = [
-  //   ['Mon, 10 Apr 2023 15:18:42 GMT', "Hi bro sender", "mid:1140"],
-  //   ['Mon, 11 Apr 2023 16:19:40 GMT', "I am fine, from sender side?", "mid:1142"],
-  // ]
 
   const receiverMessage = props.receiverMessage;
   const senderMessage = props.senderMessage;
@@ -20,8 +11,6 @@ const ShowMessage = (props) => {
 
   const message = useRef([]);
   const panelState = useRef([]);
-  const [panelData, setPanelData] = useState([]);
-  // const [disableRenderMessage, setDisableRenderMessage] = useState(false);
 
   function getMessageDiv(message, isLeft, mid) {
     return (
@@ -59,54 +48,54 @@ const ShowMessage = (props) => {
       var receiverDateObj = new Date();
 
       for (; i < senderMessage.length && j < receiverMessage.length; ) {
-        console.log(i, j);
+        // console.log(i, j);
         senderDateObj = new Date(senderMessage[i][0]);
         receiverDateObj = new Date(receiverMessage[j][0]);
 
         // console.log(senderDateObj, receiverDateObj);
 
         if (senderDateObj < receiverDateObj) {
-          if (tempDate !== senderDateObj.toDateString()) {
+          if (tempDate !== senderDateObj.toString()) {
             message.current.push(getDateDiv(senderDateObj.toDateString()));
-            tempDate = senderDateObj.toDateString();
+            tempDate = senderDateObj.toString();
           }
           message.current.push(
-            getMessageDiv(senderMessage[i][1], false, senderMessage[i][2])
+            getMessageDiv(senderMessage[i][1], false, senderMessage[i][0])
           );
-          // console.log("chosen", senderDateObj, senderMessage[i][1]);
+
           i++;
         } else {
-          if (tempDate !== receiverDateObj.toDateString()) {
+          if (tempDate !== receiverDateObj.toString()) {
             message.current.push(getDateDiv(receiverDateObj.toDateString()));
-            tempDate = receiverDateObj.toDateString();
+            tempDate = receiverDateObj.toString();
           }
 
           message.current.push(
-            getMessageDiv(receiverMessage[j][1], true, receiverMessage[j][2])
+            getMessageDiv(receiverMessage[j][1], true, receiverMessage[j][0])
           );
-          // console.log("chosen", receiverDateObj, receiverMessage[j][1]);
+
           j++;
         }
       }
 
       while (i < senderMessage.length) {
-        if (tempDate !== senderDateObj.toDateString()) {
+        if (tempDate !== senderDateObj.toString()) {
           message.current.push(getDateDiv(senderDateObj.toDateString()));
-          tempDate = senderDateObj.toDateString();
+          tempDate = senderDateObj.toString();
         }
         message.current.push(
-          getMessageDiv(senderMessage[i][1], false, senderMessage[i][2])
+          getMessageDiv(senderMessage[i][1], false, senderMessage[i][0])
         );
         i++;
       }
 
       while (j < receiverMessage.length) {
-        if (tempDate !== receiverDateObj.toDateString()) {
+        if (tempDate !== receiverDateObj.toString()) {
           message.current.push(getDateDiv(receiverDateObj.toDateString()));
-          tempDate = receiverDateObj.toDateString();
+          tempDate = receiverDateObj.toString();
         }
         message.current.push(
-          getMessageDiv(receiverMessage[j][1], true, receiverMessage[j][2])
+          getMessageDiv(receiverMessage[j][1], true, receiverMessage[j][0])
         );
         j++;
       }

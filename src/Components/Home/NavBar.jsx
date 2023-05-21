@@ -5,7 +5,8 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../FirebaseConfigs/FirebaseConfig";
 import { getAuth } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUserId } from "../../features/user/userLoginSlice";
+import { logout, updateUserId } from "../../features/user/userLoginSlice";
+import { updateuser } from "../../features/user/userSlice";
 
 const NavBar = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -119,9 +120,21 @@ const NavBar = () => {
             </div>
           ) : (
             <div className="order-2 bg-gradient-to-r from-blue-500 to-teal-500 text-white p-2 rounded">
-              <Link to={`/user/${userName}`} className="text-black font-bold">
+              <Link to={`/user/${userName}`} className="text-black font-bold border-white p-2 border-r-2">
                 {userName}
               </Link>
+              <button
+                  className="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2"
+                  onClick={() => {
+                    dispatch(updateuser(null));
+                    dispatch(updateUserId(null));
+                    dispatch(logout());
+                    globalAuth.logout();
+                    navigate("/home");
+                  }}
+                >
+                  Sign Out
+                </button>
             </div>
           )}
         </div>
@@ -160,6 +173,9 @@ const NavBar = () => {
                 <button
                   className="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2"
                   onClick={() => {
+                    dispatch(updateuser(null));
+                    dispatch(updateUserId(null));
+                    dispatch(logout());
                     globalAuth.logout();
                     navigate("/home");
                     toggleSidebar();

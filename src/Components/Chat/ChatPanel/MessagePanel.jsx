@@ -2,49 +2,52 @@ import ShowMessage from "./ShowMessage";
 import { useDispatch, useSelector } from "react-redux";
 import Picker, { EmojiStyle } from "emoji-picker-react";
 import { configureEmojiPanel } from "../../../features/emoji/emojiSlice";
-import { useEffect, useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
+import { useEffect, useRef, useState } from "react";
+import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../FirebaseConfigs/FirebaseConfig";
+import { m } from "framer-motion";
 
 const MessagePanel = (props) => {
-  const [senderMessage, setSenderMessage] = useState([]);
-  const [receiverMessage, setReceiverMessage] = useState([]);
 
-  const senderUserId = useSelector((state) => state.userSignIn.userId);
+  const senderMessage = useRef([]);
+  const receiverMessage = useRef([]);
+
+  const [message, setMessage] = useState({
+    senderMessage: [],
+    receiverMessage: [],
+  });
+
+  const senderUserId = useSelector( (state) => state.userSignIn.userId);
   const receiverUserId = useSelector((state) => state.user.user.username);
 
   useEffect(() => {
-    async function fetchSenderMessage() {
-      const docRef = doc(
-        db,
-        `/conversation/${receiverUserId}/conversation_with_whom`,
-        senderUserId
-      );
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        let data = docSnap.data().chat;
 
+    onSnapshot(
+      doc(
+        db,
+        `/conversation/${senderUserId}/conversation_with_whom`,
+        senderUserId
+      ),
+      (doc) => {
+        let data = doc.data().chat;
         let tempSenderMessage = [];
         for (let key in data) {
           if (data.hasOwnProperty(key)) {
             tempSenderMessage.push([String(key), data[key]]);
           }
         }
-        setSenderMessage(tempSenderMessage);
-      } else {
-        console.log("No such document!");
+        senderMessage.current = tempSenderMessage;
       }
-    }
+    );
 
-    async function fetchReceiverMessage() {
-      const docRef = doc(
+    onSnapshot(
+      doc(
         db,
-        `/conversation/${senderUserId}/conversation_with_whom`,
-        receiverUserId
-      );
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        let data = docSnap.data().chat;
+        `/conversation/${receiverUserId}/conversation_with_whom`,
+        senderUserId
+      ),
+      (doc) => {
+        let data = doc.data().chat;
 
         let tempReceiverMessage = [];
         for (let key in data) {
@@ -52,14 +55,18 @@ const MessagePanel = (props) => {
             tempReceiverMessage.push([String(key), data[key]]);
           }
         }
-        setReceiverMessage(tempReceiverMessage);
-      } else {
-        console.log("No such document!");
+        receiverMessage.current = tempReceiverMessage;
       }
-    }
+    );
+    
+      const messageObj = {
+        senderMessage: senderMessage.current,
+        receiverMessage: receiverMessage.current,
+      }
+      console.log("message obj",messageObj)
 
-    fetchReceiverMessage();
-    fetchSenderMessage();
+    setMessage(messageObj)
+
   }, []);
 
   const dispatch = useDispatch();
@@ -85,8 +92,8 @@ const MessagePanel = (props) => {
     <div className="overflow-y-auto bg-pattern1">
       <div className="">
         <ShowMessage
-          receiverMessage={receiverMessage}
-          senderMessage={senderMessage}
+          receiverMessage={message.receiverMessage}
+          senderMessage={message.senderMessage}
         />
       </div>
       {emojiSelected && (

@@ -110,6 +110,7 @@ const UserDashboard = () => {
                   id="profile-photo"
                   className="w-8 h-8 rounded-full absolute top-0 right-0 bg-inherit z-10 bg-blue-200 opacity-0"
                   onChange={uploadFile}
+                  accept="image/*"
                 />
                 <img
                   id="profile-photo-preview"
