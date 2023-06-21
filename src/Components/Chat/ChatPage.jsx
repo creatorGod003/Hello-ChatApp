@@ -11,7 +11,6 @@ const ChatPage = () => {
   const isMobile = useSelector((state)=>{return state.responsive.isMobile}) 
   const dispatch = useDispatch()
   dispatch(updateMobile())
-  console.log('isMobile', isMobile)
 
   return (
     <div className='h-screen'>

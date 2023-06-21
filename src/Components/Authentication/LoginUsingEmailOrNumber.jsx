@@ -7,9 +7,9 @@ import { doc, getDoc } from "firebase/firestore";
 import { login } from "../../features/user/userLoginSlice";
 import { useDispatch } from "react-redux";
 
+import { BeatLoader } from "react-spinners";
 
 const LoginUsingEmailOrNumber = () => {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [requireEmail, setRequireEmail] = useState(false);
@@ -18,6 +18,7 @@ const LoginUsingEmailOrNumber = () => {
   const globalAuth = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [onLoading, setOnLoading] = useState(false);
 
   function resetFields() {
     setEmail("");
@@ -26,7 +27,6 @@ const LoginUsingEmailOrNumber = () => {
   }
 
   async function handleSignIn(e) {
-
     e.preventDefault();
 
     if (email === "") {
@@ -59,25 +59,33 @@ const LoginUsingEmailOrNumber = () => {
     } else if (email.match(emailRegex) !== null) {
       credential = email;
     } else {
-      console.log("Invalid number or email 1st if");
+      console.log("Invalid number or email");
       setInvalidDetails(true);
       return;
     }
 
     console.log("credential are : ", credential);
 
+    
+    setOnLoading(true);
+    console.log("Signing in...")
     signInWithEmailAndPassword(firebaseAuth, credential, password)
       .then((userCredential) => {
         const user = userCredential.user;
         globalAuth.login(user);
         dispatch(login(JSON.stringify(user)));
         resetFields();
+        setOnLoading(false);
         navigate("/home");
+
       })
       .catch((error) => {
         setInvalidDetails(true);
         alert(error.message);
+        setOnLoading(false);
       });
+
+
   }
 
   function setRequireOff() {
@@ -112,7 +120,7 @@ const LoginUsingEmailOrNumber = () => {
               value={email}
               name="email_num"
               type="text"
-              placeholder="Enter your email or number with country code"
+              placeholder="Country code + number or email"
             />
           </label>
 
@@ -152,10 +160,12 @@ const LoginUsingEmailOrNumber = () => {
           </div>
 
           <button
-            className="p-3 m-2 border border-slate-800 rounded bg-blue-500 text-white cursor-pointer"
+            className="p-4 m-2 border border-slate-800 rounded bg-blue-500 text-white cursor-pointer flex justify-center items-center"
             onClick={(e) => handleSignIn(e)}
           >
-            Sign In
+            {
+              onLoading ? <BeatLoader color={"white"} size={10} /> : "Sign In"
+            }
           </button>
 
           <div className="text-red-500 text-center m-2">

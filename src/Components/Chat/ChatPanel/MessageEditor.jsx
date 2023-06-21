@@ -7,7 +7,7 @@ import {
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../FirebaseConfigs/FirebaseConfig";
 
-const MessageEditor = () => {
+const MessageEditor = (props) => {
 
   const dispatch = useDispatch();
   const micRef = useRef();
@@ -15,6 +15,7 @@ const MessageEditor = () => {
   const inputFieldRef = useRef();
 
   const emojiSelected = useSelector((state) => state.emojipicker.selected);
+
 
   const [inputOnFocus, setInputOnFocus] = useState(false);
   const [text, setText] = useState("");
@@ -25,16 +26,13 @@ const MessageEditor = () => {
 
   useEffect(() => {
 
-
     if(text.trim() !== "")
-    setInputOnFocus(true);
-    else{
-      setInputOnFocus(false);
-    }
+      setInputOnFocus(true);
+    else
+      setInputOnFocus(false);    
 
     dispatch(updateTextEditor([text, setText]));
-    
-    inputFieldRef.current.focus();
+    // inputFieldRef.current.focus();
 
   }, [text]);
 
@@ -57,7 +55,7 @@ const MessageEditor = () => {
   }
 
   function handleBlur(){
-    inputFieldRef.current.focus();
+    // inputFieldRef.current.focus();
   }
 
   async function handleMessageSending() {

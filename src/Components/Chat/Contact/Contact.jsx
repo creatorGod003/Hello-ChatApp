@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import ContactHeader from "./ContactHeader";
 import ContactList from "./ContactList";
 
-
-// Contact component which is responsible for showing contact header and contact list
+// This component is rendering contact header and contact list.
 
 const Contact = () => {
 

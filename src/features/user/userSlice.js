@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
 
 const initialState={
-    user:null
+    user:null,
 }
+
 const userSlice = createSlice({
     name: 'user',
     initialState,
@@ -10,6 +12,7 @@ const userSlice = createSlice({
         updateuser:(state, action)=>{
             console.log(action.payload)
             state.user = action.payload
+
         }
     }
 })

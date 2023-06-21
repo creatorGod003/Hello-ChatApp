@@ -5,9 +5,11 @@ import React, { useState } from 'react'
 const Search = () => {
 
   const [showSearch, setShowSearch] = useState(true);
+
   function removeSearchIcon() {
     setShowSearch(false);
   }
+  
   function addSearchIcon() {
     setShowSearch(true);
   }

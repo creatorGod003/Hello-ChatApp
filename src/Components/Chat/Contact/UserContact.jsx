@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateuser } from "../../../features/user/userSlice";
 import { useNavigate } from "react-router-dom";
-import {
-  deselectContact,
-  resetContact,
-  selectContact,
-} from "../../../features/ContactSelect/contactSelectSlice";
+import { selectContact } from "../../../features/ContactSelect/contactSelectSlice";
 
-// User contact component which is responsible for showing user contact showing its image, username along with last message and time
+// Responsible for showing user contacts. It shows its profile image, username along with last message and its arrival time.
+
 const UserContact = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,7 +22,6 @@ const UserContact = (props) => {
   const onSelect = () => {
     dispatch(selectContact(index));
     dispatch(updateuser(props.userData));
-
     if (isMobile) navigate("/chatpanel");
   };
 
@@ -33,15 +29,15 @@ const UserContact = (props) => {
     <div
       className={` ${
         selected ? "bg-gray-500 rounded-lg" : "bg-inherit"
-      } flex justify-around items-center p-2 my-1`}
+      } flex justify-around items-center p-2 my-1 cursor-pointer`}
       onClick={onSelect}
     >
       <img
         src={props.userData.profileURL}
-        alt=""
+        alt="contact reference"
         className="w-16 h-16 rounded-full"
       />
-      <div className="basis-3/4 text-white">
+      <div className="basis-3/4 ml-2 text-white">
         <div>{props.userData.username}</div>
       </div>
     </div>

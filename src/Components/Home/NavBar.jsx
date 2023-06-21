@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/Auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../FirebaseConfigs/FirebaseConfig";
-import { getAuth } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, updateUserId } from "../../features/user/userLoginSlice";
 import { updateuser } from "../../features/user/userSlice";

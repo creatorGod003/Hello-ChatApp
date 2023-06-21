@@ -6,6 +6,7 @@ import { collection, query, getDocs } from "firebase/firestore";
 import { addContacts } from "../../../features/ContactSelect/contactSelectSlice";
 
 const ContactList = () => {
+  
   const [userData, setUserData] = useState([]);
   const userDataRef = useRef([]);
 
@@ -20,7 +21,6 @@ const ContactList = () => {
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       if (doc.data().email !== JSON.parse(loggedInUser).email) {
-        console.log(doc.id, " => ", doc.data());
         userDataRef.current.push(doc.data());
         numberOfContact.current += 1;
       }
@@ -31,11 +31,15 @@ const ContactList = () => {
   }
 
   useEffect(() => {
-    fetchUserData();
+    
+    if(userData.length === 0){
+      fetchUserData();
+    }
+
   }, []);
 
   return (
-    <div className="p-2 my-3 flex flex-col h-[75vh] justify-start overflow-y-auto cursor-pointer">
+    <div className="p-2 my-3 flex flex-col h-[75vh] justify-start overflow-y-auto">
       {userData.map((user, index) => {
         return <UserContact key={index} index={index} userData={user} />;
       })}
