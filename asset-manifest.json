@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/Hello-ChatApp/home/static/css/main.5b309374.css",
-    "main.js": "/Hello-ChatApp/home/static/js/main.922baa48.js",
-    "static/js/787.7ea0274a.chunk.js": "/Hello-ChatApp/home/static/js/787.7ea0274a.chunk.js",
-    "index.html": "/Hello-ChatApp/home/index.html",
-    "static/media/pattern1.svg": "/Hello-ChatApp/home/static/media/pattern1.8a2e619a5dabd84c20b2.svg",
-    "main.5b309374.css.map": "/Hello-ChatApp/home/static/css/main.5b309374.css.map",
-    "main.922baa48.js.map": "/Hello-ChatApp/home/static/js/main.922baa48.js.map",
-    "787.7ea0274a.chunk.js.map": "/Hello-ChatApp/home/static/js/787.7ea0274a.chunk.js.map"
+    "main.css": "/Hello-ChatApp/static/css/main.8648489c.css",
+    "main.js": "/Hello-ChatApp/static/js/main.8ad63f7c.js",
+    "static/js/787.7ea0274a.chunk.js": "/Hello-ChatApp/static/js/787.7ea0274a.chunk.js",
+    "index.html": "/Hello-ChatApp/index.html",
+    "static/media/pattern1.svg": "/Hello-ChatApp/static/media/pattern1.8a2e619a5dabd84c20b2.svg",
+    "main.8648489c.css.map": "/Hello-ChatApp/static/css/main.8648489c.css.map",
+    "main.8ad63f7c.js.map": "/Hello-ChatApp/static/js/main.8ad63f7c.js.map",
+    "787.7ea0274a.chunk.js.map": "/Hello-ChatApp/static/js/787.7ea0274a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5b309374.css",
-    "static/js/main.922baa48.js"
+    "static/css/main.8648489c.css",
+    "static/js/main.8ad63f7c.js"
   ]
 }
