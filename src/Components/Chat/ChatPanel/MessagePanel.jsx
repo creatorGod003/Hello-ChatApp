@@ -26,19 +26,23 @@ const MessagePanel = (props) => {
       ),
       (doc) => {
         console.log("Rendered sender message ✅");
-        let data = doc.data().chat;
 
-        console.log(data);
+        if (doc.data() === null) {
+          senderMessage.current = [];
+        } else {
+          let data = doc.data().chat;
 
-        let tempSenderMessage = [];
-        for (let key in data) {
-          tempSenderMessage.push([String(key), data[key]]);
+          let tempSenderMessage = [];
+          for (let key in data) {
+            tempSenderMessage.push([String(key), data[key]]);
+          }
+          senderMessage.current = tempSenderMessage;
+
+          senderMessage.current.sort((a, b) => {
+            return new Date(a[0]) - new Date(b[0]);
+          });
         }
-        senderMessage.current = tempSenderMessage;
         setUpdatedSenderMessage(senderMessage.current);
-        senderMessage.current.sort((a, b) => {
-          return new Date(a[0]) - new Date(b[0]);
-        });
       }
     );
   }, [receiverUserId]);
@@ -51,12 +55,12 @@ const MessagePanel = (props) => {
         senderUserId
       ),
       (doc) => {
-        if (!doc.exists) {
-          receiverMessage.curent = [];
+        console.log("Rendered receiver message ✅");
+
+        if (doc.data() === null) {
+          receiverMessage.current = [];
         } else {
-          console.log("Rendered receiver message ✅");
           let data = doc.data().chat;
-          console.log(data);
 
           let tempReceiverMessage = [];
           for (let key in data) {
@@ -91,7 +95,6 @@ const MessagePanel = (props) => {
     setText(text + event.emoji);
   };
 
-  
   const scrollHeight = useRef(0);
   const scrollMaxHeight = useRef(0);
   const reachedBottom = useRef(false);
@@ -109,21 +112,19 @@ const MessagePanel = (props) => {
       onClick={() => {
         dispatch(configureEmojiPanel(false));
       }}
-
-      onScroll={
-        (e)=>{
-          scrollHeight.current = e.target.scrollTop;
-          scrollMaxHeight.current = e.target.scrollHeight-e.target.clientHeight;
-          reachedBottom.current = Math.round(scrollHeight.current) !== scrollMaxHeight.current;
-          console.log(reachedBottom.current)
-        }
-      }
+      onScroll={(e) => {
+        scrollHeight.current = e.target.scrollTop;
+        scrollMaxHeight.current = e.target.scrollHeight - e.target.clientHeight;
+        reachedBottom.current =
+          Math.round(scrollHeight.current) !== scrollMaxHeight.current;
+        console.log(reachedBottom.current);
+      }}
     >
       <div className="">
-        <ShowMessage
+        {/* <ShowMessage
           receiverMessage={updatedReceiverMessage}
           senderMessage={updatedSenderMessage}
-        />
+        /> */}
       </div>
       {emojiSelected && (
         <div className="inline-block sticky bottom-0">
@@ -137,17 +138,14 @@ const MessagePanel = (props) => {
         </div>
       )}
 
-      {reachedBottom.current===true &&
-       (<div className="fixed right-10 bottom-[100px]">
+      {reachedBottom.current === true && (
+        <div className="fixed right-10 bottom-[100px]">
           <button
             className="bg-blue-500 text-white px-2 py-1 rounded-md  shadow-lg hover:bg-blue-600"
             onClick={() => {
               document
                 .getElementById("messagePanel")
-                .scrollTo(
-                0,
-                  scrollMaxHeight.current
-                );
+                .scrollTo(0, scrollMaxHeight.current);
             }}
           >
             <svg
@@ -166,8 +164,7 @@ const MessagePanel = (props) => {
             </svg>
           </button>
         </div>
-       )
-      }
+      )}
     </div>
   );
 };

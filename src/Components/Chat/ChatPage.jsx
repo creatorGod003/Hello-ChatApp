@@ -13,7 +13,9 @@ const ChatPage = () => {
   dispatch(updateMobile())
 
   return (
-    <div className='h-screen'>
+    <div className='h-screen'
+
+    >
       {
         isMobile?<Contact/>:
         

@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import LoginUsingGoogle from './LoginUsingGoogle'
 
 const Login = () => {
     return (
@@ -13,6 +12,7 @@ const Login = () => {
                 >
                     Continue with Email/Number
                 </Link>
+                
                 <div className='text-center'> Don't have an account? <Link className='font-bold underline text-black' to={"/signup"}>Sign up</Link> </div>
             </div>
         </div>

@@ -76,7 +76,7 @@ const NavBar = () => {
             <nav>
               <ul className="md:flex items-center justify-between text-base text-blue-600 pt-4 md:pt-0">
                 <Link
-                  to="home"
+                  to="/"
                   className="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2"
                 >
                   Home

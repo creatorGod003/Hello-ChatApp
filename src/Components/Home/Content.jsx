@@ -1,9 +1,18 @@
-import React from 'react'
+import React from "react";
+import Footer from "./Footer";
+import Features from "./Features";
+import Hero from "./Hero";
 
 const Content = () => {
   return (
-    <div className='w-full h-full flex justify-center items-center'>Content</div>
-  )
-}
+    <div className="">
+      <Hero />
 
-export default Content
+      <Features />
+
+      <Footer />
+    </div>
+  );
+};
+
+export default Content;
