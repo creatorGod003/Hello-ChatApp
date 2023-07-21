@@ -76,7 +76,7 @@ const LoginUsingEmailOrNumber = () => {
         dispatch(login(JSON.stringify(user)));
         resetFields();
         setOnLoading(false);
-        navigate("/home");
+        navigate("/");
 
       })
       .catch((error) => {

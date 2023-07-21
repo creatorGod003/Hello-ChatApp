@@ -1,7 +1,7 @@
 {
-  "name": "chatapp",
-  "homepage": "https://creatorGod003.github.io/Hello-ChatApp/",
+  "name": "hellochatapp",
   "version": "0.1.0",
+  "homepage": "https://creatorGod003.github.io/Hello-ChatApp/",
   "private": false,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
