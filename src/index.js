@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, HashRouter } from "react-router-dom";
 import {AuthState} from "./Components/Context/Auth";
 import { Provider } from "react-redux";
 import store from "./app/store";
@@ -11,13 +11,15 @@ import store from "./app/store";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
-    {/* <React.StrictMode> */}
+    <HashRouter>
+    <React.StrictMode>
       <AuthState>
         <Provider store = {store}>
          <App />
         </Provider>
       </AuthState>
-    {/* </React.StrictMode> */}
+    </React.StrictMode>
+    </HashRouter>
   </BrowserRouter>
 );
 
